@@ -41,14 +41,14 @@ all_tot_int1 = tot_int1.tolist()
 all_tot_area1 = tot_area1.tolist()
 all_scaled_intensity = (np.array(all_tot_int1)/np.array(all_med_inten)[:, np.newaxis]).tolist()
 
-
-intensities = np.array(all_tot_int1[0])
-intensities = [0 if x < 35 else x for x in intensities]
-xcoords = np.array(all_cen_coords[0])[:,0]
-ycoords = np.array(all_cen_coords[0])[:,1]
-
 images = 500
 num_ar = 500
+start_frame = 500
+
+intensities = np.array(all_tot_int1[start_frame])
+intensities = [0 if x < 35 else x for x in intensities]
+xcoords = np.array(all_cen_coords[start_frame])[:,0]
+ycoords = np.array(all_cen_coords[start_frame])[:,1]
 
 ARs = np.zeros((num_ar,3,images))
 count = 0
@@ -92,9 +92,9 @@ plt.ion()
 
 ### need to add time component to AR array? - or just put in which image it is
 
-for i in range(1,images):
+for i in range(start_frame+1,start_frame+images):
     
-    start = dates[0] + i
+    start = dates[start_frame] + 0.5*i
     
     dt_begin = 2400000.5
     dt_dif1 = start-dt_begin    
@@ -117,18 +117,18 @@ for i in range(1,images):
             #print intensities[k]
             #for c in range(100):  # somehow just current AR -- count duh
             for c in range(count):
-                dr = np.sqrt((ARs[c,1,(i-1)]-xcoords[k])**2 + (ARs[c,2,(i-1)]-ycoords[k])**2)
+                dr = np.sqrt((ARs[c,1,(i-start_frame-1)]-xcoords[k])**2 + (ARs[c,2,(i-start_frame-1)]-ycoords[k])**2)
                 #print "dr = %0.2f" % dr
                 if dr < 5:
-                    ARs[c,0,i] = intensities[k]
-                    ARs[c,1,i] = xcoords[k]
-                    ARs[c,2,i] = ycoords[k]
+                    ARs[c,0,i-start_frame] = intensities[k]
+                    ARs[c,1,i-start_frame] = xcoords[k]
+                    ARs[c,2,i-start_frame] = ycoords[k]
                     found = 1  # maybe need to say closest one if more than one found?  don't think should be issue
                     #print "found"
             if found == 0:
-                ARs[count,0,i] = intensities[k]
-                ARs[count,1,i] = xcoords[k]
-                ARs[count,2,i] = ycoords[k]
+                ARs[count,0,i-start_frame] = intensities[k]
+                ARs[count,1,i-start_frame] = xcoords[k]
+                ARs[count,2,i-start_frame] = ycoords[k]
                 count += 1
                 #print "count = ", count
     
@@ -141,7 +141,7 @@ for i in range(1,images):
     #im = ax.scatter(np.array(all_cen_coords[0])[:,0], np.array(all_cen_coords[0])[:,1],intensities)
     canvas.restore_region(background)
         
-    im = ax.scatter(xcoords, ycoords,intensities,c=color[i])
+    im = ax.scatter(xcoords, ycoords,intensities,c=color[i-start_frame])
     canvas.blit(ax.bbox)
     plt.pause(0.001) # used for 1000 points, reasonable
     #plt.pause(0.1) # used for 1000 points, reasonable

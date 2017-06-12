@@ -6,46 +6,7 @@ Created on Fri Jun 09 08:47:15 2017
 """
 
 import matplotlib.pyplot as plt
-from matplotlib.pyplot import plot, ion, draw
 import numpy as np
-import random
-from matplotlib.widgets import RectangleSelector
-import matplotlib.patches as patches
-from PIL import Image
-import scipy.signal
-#matplotlib.use('TkAgg') 	# NOTE: This is a MAC/OSX thing. Probably REMOVE for linux/Win
-from matplotlib.widgets import Cursor
-from pylab import *
-from pylab import axvline
-import sunpy
-from sunpy.map import Map
-from scipy.interpolate import interp1d
-from scipy import signal
-import scipy.misc
-import astropy.units as u
-import h5py
-from scipy import fftpack
-from statsmodels.nonparametric.smoothers_lowess import lowess
-import matplotlib.pylab as plt
-from astropy.convolution import convolve, Box1DKernel
-from matplotlib import cm
-from numpy.random import randn
-from matplotlib.colors import LogNorm
-import matplotlib.colors as colors
-from matplotlib.mlab import bivariate_normal
-from matplotlib.ticker import LogFormatterMathtext
-from mpl_toolkits.axes_grid1 import make_axes_locatable
-from matplotlib import gridspec
-from matplotlib.pyplot import figure, show
-from matplotlib.image import AxesImage
-from matplotlib.widgets import Button
-from matplotlib.widgets import RadioButtons
-from matplotlib.pyplot import figure, show
-import numpy as npy
-from numpy.random import rand
-import numpy as np
-import matplotlib.pyplot as plt
-import scipy.signal
 from scipy.io.idl import readsav
 import jdcal
 

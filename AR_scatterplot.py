@@ -16,7 +16,7 @@ def linear(f, m, b):
 #"""   
 #s = readsav('fits_sample_strs_20161219v7.sav')
 s = readsav('fits_strs_20161219v7.sav')
-dates = np.load('C:/Users/Brendan/Desktop/MSU/Active_Longitude/image_jul_dates.npy')
+dates = np.load('C:/Users/Brendan/Desktop/MSU_Project/Active_Longitude/image_jul_dates.npy')
 dates = np.array(dates)
 
 trim = 2922  # image before jump 20140818-20151103
