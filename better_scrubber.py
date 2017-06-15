@@ -4,6 +4,14 @@ Created on Thu Jun 01 16:14:50 2017
 
 @author: Brendan
 """
+
+"""
+###########################################
+### scrubs website for links ##############
+### and downloads according to pattern  ###
+###########################################
+"""
+
 import numpy as np
 import urllib2
 import urllib

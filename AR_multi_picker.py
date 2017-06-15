@@ -5,12 +5,19 @@ Created on Fri Jun 09 08:47:15 2017
 @author: Brendan
 """
 
+"""
+#################################################
+### interactive tool so you can click ###########
+### on a scatter point of duration/intensity  ###
+### and displays AR life statistics #############
+#################################################
+"""
+
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy.io.idl import readsav
 import jdcal
 
-# Simple mouse click function to store coordinates
 def onclick(event):
     global ix, iy, c, ind
     ixx, iyy = event.xdata, event.ydata
@@ -130,40 +137,30 @@ for i in range(1,images):
     dt_dif1 = start-dt_begin    
     dt_greg1 = jdcal.jd2gcal(dt_begin,dt_dif1)
     
-    #all_tot_int1 = [0 if x < 35 else x for x in all_tot_int1]
     intensities = np.array(all_tot_int1[i])
     intensities = [0 if x < 35 else x for x in intensities]  # maybe also eliminate zeros
     xcoords = np.array(all_cen_coords[i])[:,0]
     ycoords = np.array(all_cen_coords[i])[:,1]
     areas = np.array(all_tot_area1[i])
     
-    #print "int = ", intensities[:n_regions[i]]
-    #print "xcoords = ", xcoords[:n_regions[i]]
-    #print "ycoords = ", ycoords[:n_regions[i]]
-    
     num_reg = n_regions[i]
     for k in range(num_reg):  # if got rid zeros, just range(intensities.size)
         if intensities[k] > 0:
             found = 0
-            #print intensities[k]
-            #for c in range(100):  # somehow just current AR -- count duh
             for c in range(count):
                 dr = np.sqrt((ARs[c,1,(i-1)]-xcoords[k])**2 + (ARs[c,2,(i-1)]-ycoords[k])**2)
-                #print "dr = %0.2f" % dr
                 if dr < 5:
                     ARs[c,0,i] = intensities[k]
                     ARs[c,1,i] = xcoords[k]
                     ARs[c,2,i] = ycoords[k]
                     ARs[c,3,i] = areas[k]
                     found = 1  # maybe need to say closest one if more than one found?  don't think should be issue
-                    #print "found"
             if found == 0:
                 ARs[count,0,i] = intensities[k]
                 ARs[count,1,i] = xcoords[k]
                 ARs[count,2,i] = ycoords[k]
                 ARs[count,3,i] = areas[k]
                 count += 1
-                #print "count = ", count
                 
 global frames, avg_int, area
 frames = np.zeros((count))
@@ -222,7 +219,6 @@ if 1:
     ax1 = plt.subplot2grid((11,11),(0, 0), colspan=5, rowspan=5)
     ax1.set_ylabel('Duration', fontsize=font_size)
     ax1.set_xlabel('Average Intensity', fontsize=font_size)
-    #coll, = ([ax1.scatter(testData[:,0], testData[:,1], picker = 5)])
     coll = ax1.scatter(avg_int, frames, picker = 5)
     
     ax2 = plt.subplot2grid((11,11),(6, 0), colspan=5, rowspan=5)

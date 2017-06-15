@@ -5,9 +5,16 @@ Created on Sun Jun 11 10:56:58 2017
 @author: Brendan
 """
 
+"""
+################################################
+### displays animated scatter plot #############
+### w/ corresponding visual image at bottom  ###
+### and saves every fram #######################
+################################################
+"""
+
 import numpy as np
 import matplotlib.pyplot as plt
-import scipy.signal
 from scipy.io.idl import readsav
 import jdcal
 import matplotlib.image as im
@@ -98,5 +105,5 @@ for i in range(1076,trim):
     image=im.imread('C:/Users/Brendan/Desktop/MSU_Project/fits_images/%s.jpg' % f_names[i])
     ax2.imshow(image)
     ax2.axis('off')
-    plt.savefig('C:/Users/Brendan/Desktop/frames/frame_%i_%s.jpeg' % (i,file_date))
-    plt.close()
+    #plt.savefig('C:/Users/Brendan/Desktop/frames/frame_%i_%s.jpeg' % (i,file_date))
+    #plt.close()

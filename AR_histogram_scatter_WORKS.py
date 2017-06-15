@@ -5,9 +5,16 @@ Created on Wed Jun 07 20:19:16 2017
 @author: Brendan
 """
 
+"""
+#########################################
+### based on number of frames ###########
+### - shows full animated scatter  ######
+###   and emergence histogram ###########
+#########################################
+"""
+
 import numpy as np
 import matplotlib.pyplot as plt
-import scipy.signal
 from scipy.io.idl import readsav
 import jdcal
 
@@ -25,25 +32,15 @@ med_inten = s.STRS.median_intensity
 tot_int1 = s.STRS.tot_int1
 tot_area1 = s.STRS.tot_area1
 
-#all_xcoords = [0 for k in range(trim)]
-#all_ycoords = [0 for k in range(trim)]
-#all_med_inten = [0 for k in range(trim)]
-#all_tot_int1 = [0 for k in range(trim)]
-#all_tot_area1 = [0 for k in range(trim)]
-#total_intensity = [0 for k in range(trim)]
-#all_scaled_intensity = [0 for k in range(trim)]
-
-#long_scaled_intensity = np.zeros((18))
-
 all_cen_coords = cen_coord.tolist()
 all_med_inten = med_inten.tolist()
 all_tot_int1 = tot_int1.tolist()
 all_tot_area1 = tot_area1.tolist()
 all_scaled_intensity = (np.array(all_tot_int1)/np.array(all_med_inten)[:, np.newaxis]).tolist()
 
-images = 500
-num_ar = 500
-start_frame = 500
+images = 300
+num_ar = 300
+start_frame = 700
 
 intensities = np.array(all_tot_int1[start_frame])
 intensities = [0 if x < 35 else x for x in intensities]
@@ -80,9 +77,6 @@ canvas = ax.figure.canvas
 ax.set_title(r'304 $\AA$ 12-Hour Carrington Full-Surface Maps' + '\n Date: %i/%i/%i' % (dt_greg1[0], dt_greg1[1], dt_greg1[2]), y=1.01, fontweight='bold', fontsize=font_size)
 ax.set_ylabel('Latitude', fontsize=font_size)
 ax.set_xlabel('Longitude', fontsize=font_size)
-#plt.tick_params(axis='both', labelsize=font_size, pad=7)
-#im = ax.scatter(np.array(all_cen_coords[0])[:,0], np.array(all_cen_coords[0])[:,1],np.array(all_tot_int1[0]))
-#im = ax.scatter(np.array(all_cen_coords[0])[:,0], np.array(all_cen_coords[0])[:,1],intensities)
 im = ax.scatter(xcoords, ycoords,intensities, c=color[0])
 ax.set_xlim(0,360)
 ax.set_ylim(-45,45)
@@ -100,48 +94,36 @@ for i in range(start_frame+1,start_frame+images):
     dt_dif1 = start-dt_begin    
     dt_greg1 = jdcal.jd2gcal(dt_begin,dt_dif1)
     
-    #all_tot_int1 = [0 if x < 35 else x for x in all_tot_int1]
     intensities = np.array(all_tot_int1[i])
-    intensities = [0 if x < 35 else x for x in intensities]  # maybe also eliminate zeros
+    intensities = [0 if x < 100 else x for x in intensities]  # maybe also eliminate zeros
     xcoords = np.array(all_cen_coords[i])[:,0]
     ycoords = np.array(all_cen_coords[i])[:,1]
-    
-    #print "int = ", intensities[:n_regions[i]]
-    #print "xcoords = ", xcoords[:n_regions[i]]
-    #print "ycoords = ", ycoords[:n_regions[i]]
     
     num_reg = n_regions[i]
     for k in range(num_reg):  # if got rid zeros, just range(intensities.size)
         if intensities[k] > 0:
             found = 0
-            #print intensities[k]
-            #for c in range(100):  # somehow just current AR -- count duh
             for c in range(count):
                 dr = np.sqrt((ARs[c,1,(i-start_frame-1)]-xcoords[k])**2 + (ARs[c,2,(i-start_frame-1)]-ycoords[k])**2)
-                #print "dr = %0.2f" % dr
                 if dr < 5:
                     ARs[c,0,i-start_frame] = intensities[k]
                     ARs[c,1,i-start_frame] = xcoords[k]
                     ARs[c,2,i-start_frame] = ycoords[k]
                     found = 1  # maybe need to say closest one if more than one found?  don't think should be issue
-                    #print "found"
             if found == 0:
                 ARs[count,0,i-start_frame] = intensities[k]
                 ARs[count,1,i-start_frame] = xcoords[k]
                 ARs[count,2,i-start_frame] = ycoords[k]
                 count += 1
-                #print "count = ", count
     
     
-    
-    #canvas = ax.figure.canvas
+
     ax.set_title(r'304 $\AA$ 12-Hour Carrington Full-Surface Maps' + '\n Date: %i/%i/%i' % (dt_greg1[0], dt_greg1[1], dt_greg1[2]), y=1.01, fontweight='bold', fontsize=font_size)
-    #plt.tick_params(axis='both', labelsize=font_size, pad=7)
-    #im = ax.scatter(np.array(all_cen_coords[0])[:,0], np.array(all_cen_coords[0])[:,1],np.array(all_tot_int1[0]))
-    #im = ax.scatter(np.array(all_cen_coords[0])[:,0], np.array(all_cen_coords[0])[:,1],intensities)
     canvas.restore_region(background)
-        
-    im = ax.scatter(xcoords, ycoords,intensities,c=color[i-start_frame])
+    
+    frms = [i for y in range(len(xcoords))]    
+    #im = ax.scatter(xcoords, ycoords,intensities,c=color[i-start_frame])
+    im = ax.scatter(frms, xcoords)
     canvas.blit(ax.bbox)
     plt.pause(0.001) # used for 1000 points, reasonable
     #plt.pause(0.1) # used for 1000 points, reasonable
@@ -185,7 +167,7 @@ for i in range(50,60):
 
 xbins = [3*i for i in range(120)]
 
-#"""
+"""
 histx = np.zeros((count))
 
 for c in range(count):
@@ -199,8 +181,24 @@ for c in range(count):
             break
 
 plt.hist(histx, bins=xbins)
-#"""
+"""
+"""
+x_ar_tot = []
+y_ar_tot = []
+first = []
+frames = []
 
+for n in range(count):
+
+    ar0 = ARs[n,:,:]
+
+    x_ar0 = ar0[1][ar0[1] != 0]
+    y_ar0 = ar0[2][ar0[2] != 0]
+    x_ar_tot = np.append(x_ar_tot, x_ar0)
+    y_ar_tot = np.append(y_ar_tot, y_ar0)
+
+plt.hist(x_ar_tot, bins=xbins)
+"""
 """
 histx = np.zeros((sum(n_regions[:1000])))
 histx = np.zeros((sum(n_regions[:1000])))

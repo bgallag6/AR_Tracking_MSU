@@ -4,9 +4,16 @@ Created on Sat Jun 10 10:00:55 2017
 
 @author: Brendan
 """
+
+"""
+################################################
+### displays animated scatter plot #############
+### w/ corresponding visual image at bottom  ###
+################################################
+"""
+
 import numpy as np
 import matplotlib.pyplot as plt
-import scipy.signal
 from scipy.io.idl import readsav
 import jdcal
 import matplotlib.image as im
@@ -85,8 +92,6 @@ ax2.axis('off')
 
 plt.ion()
 
-
-### need to add time component to AR array? - or just put in which image it is
 
 for i in range(1,images):
     

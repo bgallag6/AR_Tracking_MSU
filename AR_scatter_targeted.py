@@ -5,9 +5,15 @@ Created on Thu Jun 08 20:55:38 2017
 @author: Brendan
 """
 
+"""
+########################################################
+### displays either a selected AR's lifetime stats #####
+### or a statistics summary of the number of frames  ###
+########################################################
+"""
+
 import numpy as np
 import matplotlib.pyplot as plt
-import scipy.signal
 from scipy.io.idl import readsav
 import jdcal
 
@@ -24,16 +30,6 @@ n_regions = s.STRS.n_region
 med_inten = s.STRS.median_intensity
 tot_int1 = s.STRS.tot_int1
 tot_area1 = s.STRS.tot_area1
-
-#all_xcoords = [0 for k in range(trim)]
-#all_ycoords = [0 for k in range(trim)]
-#all_med_inten = [0 for k in range(trim)]
-#all_tot_int1 = [0 for k in range(trim)]
-#all_tot_area1 = [0 for k in range(trim)]
-#total_intensity = [0 for k in range(trim)]
-#all_scaled_intensity = [0 for k in range(trim)]
-
-#long_scaled_intensity = np.zeros((18))
 
 all_cen_coords = cen_coord.tolist()
 all_med_inten = med_inten.tolist()
@@ -90,8 +86,6 @@ background = fig.canvas.copy_from_bbox(ax.bbox)
 plt.ion()
 """
 
-### need to add time component to AR array? - or just put in which image it is
-
 for i in range(1,images):
     
     start = dates[0] + i
@@ -100,37 +94,27 @@ for i in range(1,images):
     dt_dif1 = start-dt_begin    
     dt_greg1 = jdcal.jd2gcal(dt_begin,dt_dif1)
     
-    #all_tot_int1 = [0 if x < 35 else x for x in all_tot_int1]
     intensities = np.array(all_tot_int1[i])
     intensities = [0 if x < 35 else x for x in intensities]  # maybe also eliminate zeros
     xcoords = np.array(all_cen_coords[i])[:,0]
     ycoords = np.array(all_cen_coords[i])[:,1]
     
-    #print "int = ", intensities[:n_regions[i]]
-    #print "xcoords = ", xcoords[:n_regions[i]]
-    #print "ycoords = ", ycoords[:n_regions[i]]
-    
     num_reg = n_regions[i]
     for k in range(num_reg):  # if got rid zeros, just range(intensities.size)
         if intensities[k] > 0:
             found = 0
-            #print intensities[k]
-            #for c in range(100):  # somehow just current AR -- count duh
             for c in range(count):
                 dr = np.sqrt((ARs[c,1,(i-1)]-xcoords[k])**2 + (ARs[c,2,(i-1)]-ycoords[k])**2)
-                #print "dr = %0.2f" % dr
                 if dr < 5:
                     ARs[c,0,i] = intensities[k]
                     ARs[c,1,i] = xcoords[k]
                     ARs[c,2,i] = ycoords[k]
                     found = 1  # maybe need to say closest one if more than one found?  don't think should be issue
-                    #print "found"
             if found == 0:
                 ARs[count,0,i] = intensities[k]
                 ARs[count,1,i] = xcoords[k]
                 ARs[count,2,i] = ycoords[k]
                 count += 1
-                #print "count = ", count
     
     
     """
@@ -149,7 +133,7 @@ for i in range(1,images):
     """
 #"""
 
-"""
+#"""
 
 ###############################################################################
 ###############################################################################
@@ -158,7 +142,7 @@ for i in range(1,images):
 # select AR for summary #
 #########################
 
-ar = 119
+ar = 15
 
 ar0 = ARs[ar,:,:]
 frames = np.count_nonzero(ar0,axis=1)[0] # - how many frames lasts
@@ -168,7 +152,7 @@ x_ar0 = ar0[1][ar0[1] != 0]
 y_ar0 = ar0[2][ar0[2] != 0]
 x_range = np.max(x_ar0) - np.min(x_ar0)
 
-for d in range(500):
+for d in range(images):
     if ar0[0,d] != 0:
         first = d
 
@@ -213,8 +197,9 @@ ax4.set_ylim(np.min(y_ar0)-3,np.max(y_ar0)+3)
 
 ###############################################################################
 ###############################################################################
-"""
+#"""
 
+"""
 xbins = [3*i for i in range(120)]
 
 frames = np.zeros((count))
@@ -285,3 +270,4 @@ ax4.set_xlabel('Average Intensity', fontsize=font_size)
 ax4.scatter(avg_int,distance)
 
 #plt.savefig('C:/Users/Brendan/Desktop/AR_Statistics_Summary_100.jpeg')
+"""
