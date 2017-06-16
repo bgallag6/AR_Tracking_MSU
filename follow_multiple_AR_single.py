@@ -17,7 +17,7 @@ import matplotlib.pyplot as plt
 from scipy.io.idl import readsav
 import jdcal
 
-"""
+#"""
 s = readsav('fits_strs_20161219v7.sav')
 dates = np.load('C:/Users/Brendan/Desktop/MSU_Project/Active_Longitude/image_jul_dates.npy')
 dates = np.array(dates)
@@ -38,10 +38,10 @@ all_tot_int1 = tot_int1.tolist()
 all_tot_area1 = tot_area1.tolist()
 all_scaled_intensity = (np.array(all_tot_int1)/np.array(all_med_inten)[:, np.newaxis]).tolist()
 
-images = 150
-num_ar = 500
-start_frame = 2013
-int_thresh = 1
+images = 300
+num_ar = 300
+start_frame = 500
+int_thresh = 30
 
 intensities = np.array(all_tot_int1[start_frame])
 #intensities = [0 if x < 35 else x for x in intensities]
@@ -129,7 +129,7 @@ for i in range(start_frame+1,start_frame+images):
     #plt.pause(0.001) # used for 1000 points, reasonable
     plt.pause(0.1) # used for 1000 points, reasonable
     #plt.pause(0.5) # used for 1000 points, reasonable
-    
+"""    
     
 frames = np.zeros((count))
 first = np.zeros((count))
@@ -223,7 +223,7 @@ ax4.set_ylim(np.min(y_ar0)-3,np.max(y_ar0)+3)
 #plt.savefig('C:/Users/Brendan/Desktop/ar%i.jpeg' % ar)
 """
 
-#"""
+"""
 ##################################
 # select mulitple AR for summary #
 ##################################
@@ -310,7 +310,7 @@ im = ax4.scatter(x_ar_tot, y_ar_tot, int_ar_tot,c=color)
 ax4.plot(x_ar_tot, y_ar_tot)
 ax4.set_xlim(np.min(x_ar_tot)-3,np.max(x_ar_tot)+3)
 ax4.set_ylim(np.min(y_ar_tot)-3,np.max(y_ar_tot)+3)
-#"""
+"""
 
 #AR_transpose = np.zeros((images,num_ar,3))
 #for u in range(images):
