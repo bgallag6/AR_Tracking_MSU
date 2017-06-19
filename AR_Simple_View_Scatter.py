@@ -9,6 +9,7 @@ Created on Fri Jun 09 16:41:24 2017
 #################################
 ### specify start / end frame ###
 ### - shows animated scatter  ###
+### - latitude / longitude    ###
 #################################
 """
 

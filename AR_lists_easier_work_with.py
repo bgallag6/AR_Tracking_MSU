@@ -25,16 +25,6 @@ med_inten = s.STRS.median_intensity
 tot_int1 = s.STRS.tot_int1
 tot_area1 = s.STRS.tot_area1
 
-#all_xcoords = [0 for k in range(trim)]
-#all_ycoords = [0 for k in range(trim)]
-#all_med_inten = [0 for k in range(trim)]
-#all_tot_int1 = [0 for k in range(trim)]
-#all_tot_area1 = [0 for k in range(trim)]
-#total_intensity = [0 for k in range(trim)]
-#all_scaled_intensity = [0 for k in range(trim)]
-
-#long_scaled_intensity = np.zeros((18))
-
 all_cen_coords = cen_coord.tolist()
 all_med_inten = med_inten.tolist()
 all_tot_int1 = tot_int1.tolist()

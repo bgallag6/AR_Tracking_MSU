@@ -9,7 +9,7 @@ Created on Thu Jun 15 13:38:15 2017
 #########################################
 ### based on number of frames ###########
 ### - shows full animated scatter  ######
-###   and emergence histogram ###########
+### (longitude vs frame)  ###############
 #########################################
 """
 

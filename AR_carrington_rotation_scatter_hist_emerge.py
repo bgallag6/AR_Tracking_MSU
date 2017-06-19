@@ -10,6 +10,7 @@ Created on Sat Jun 10 20:05:56 2017
 ### based on carrington rotations #######
 ### - shows each rotation periods:  #####
 ###   emergence scatter and histogram ###
+###   latitude and longitude          ###
 #########################################
 """
 

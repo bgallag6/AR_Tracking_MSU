@@ -39,22 +39,25 @@ Longitude = []
 
 count = 0
 
-with open('C:/Users/Brendan/Desktop/NOAA AR/2011_NOAA_AR.csv', 'rb') as csvfile:
+year0 = 2010
+
+with open('C:/Users/Brendan/Desktop/Week3/NOAA AR/%i_NOAA_AR.csv' % year0, 'rb') as csvfile:
      spamreader = csv.reader(csvfile, delimiter=',', quotechar='|')
      
      for row in spamreader:
         if count > 0:
-             date = '%s%s%s' % (row[0],row[1],row[2])
+             date = '%i%0.2i%0.2i' % (int(row[0]),int(row[1]),int(row[2]))
+             print date
              dt = datetime.datetime.strptime(date[0:8],fmt)
              jul_date = sum(jdcal.gcal2jd(dt.year, dt.month, dt.day))
              dates = np.append(dates, jul_date)
              Latitude = np.append(Latitude, int(row[5]))
              Longitude = np.append(Longitude, int(row[4]))
              if count == 1:
-                 date_start = '%s/%s/%s' % (row[0],row[1],row[2])
+                 date_start = '%i/%0.2i/%0.2i' % (int(row[0]),int(row[1]),int(row[2]))
         count += 1
 
-date_end = '%s/%s/%s' % (row[0],row[1],row[2])
+date_end = '%i/%0.2i/%0.2i' % (int(row[0]),int(row[1]),int(row[2]))
              
 dates = np.array(dates)
 Latitude = np.array(Latitude)
@@ -81,6 +84,7 @@ ax.set_xlabel('Frame', fontsize=font_size)
 ax.set_xlim(0,730)
 ax.set_ylim(0,360)  
 im = ax.scatter(frmN, xN)  
+#plt.savefig('C:/Users/Brendan/Desktop/NOAA_%i_Northern.pdf' % year0, format='pdf')
 
 fig = plt.figure(figsize=(22,11))
 ax = plt.gca()
@@ -90,6 +94,7 @@ ax.set_xlabel('Frame', fontsize=font_size)
 ax.set_xlim(0,730)
 ax.set_ylim(0,360)  
 im = ax.scatter(frmS, xS)  
+#plt.savefig('C:/Users/Brendan/Desktop/NOAA_%i_Southern.pdf' % year0, format='pdf')
 
 fig = plt.figure(figsize=(22,11))
 ax = plt.gca()
@@ -98,5 +103,6 @@ ax.set_ylabel('Longitude', fontsize=font_size)
 ax.set_xlabel('Frame', fontsize=font_size)
 ax.set_xlim(0,730)
 ax.set_ylim(0,360)  
-im = ax.scatter(frms, Longitude)  
+im = ax.scatter(frms, Longitude) 
+#plt.savefig('C:/Users/Brendan/Desktop/NOAA_%i_Full.pdf' % year0, format='pdf') 
 #"""

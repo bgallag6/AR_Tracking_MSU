@@ -9,6 +9,9 @@ Created on Mon Jun 12 15:01:18 2017
 #################################
 ### specify start / end frame ###
 ### - shows animated scatter  ###
+### - latitude / longitude    ###
+### specify ARs within range..###
+### get their combined life   ###
 #################################
 """
 
