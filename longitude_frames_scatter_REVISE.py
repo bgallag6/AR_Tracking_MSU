@@ -19,7 +19,7 @@ import matplotlib.pyplot as plt
 from scipy.io.idl import readsav
 import jdcal
 
-#"""
+"""
 s = readsav('fits_strs_20161219v7.sav')
 dates = np.load('C:/Users/Brendan/Desktop/MSU_Project/Active_Longitude/image_jul_dates.npy')
 dates = np.array(dates)
@@ -46,13 +46,8 @@ num_ar = 300
 start_frame = 2500
 int_thresh = 30
 
-ARs = np.zeros((num_ar,3,images))
+#ARs = np.zeros((num_ar,3,images))
 count = 0
-
-start = dates[0]
-dt_begin = 2400000.5
-dt_dif1 = start-dt_begin    
-dt_greg1 = jdcal.jd2gcal(dt_begin,dt_dif1)
 
 color = np.zeros((images,3))
 for t in range(images):
@@ -185,19 +180,24 @@ for i in range(start_frame,start_frame+images):
     xerr2S_tot = np.append(xerr2S_tot, xerr2S_temp)
     
     
-    im = ax.scatter(frm_temp, xcoords, c=color[i-start_frame])
+    #im = ax.scatter(frm_temp, xcoords, c=color[i-start_frame])
+    im = ax.scatter(frm_temp, xcoords, int_tot)
+    #im = ax.scatter(frm_temp, xcoords)
     #im = ax.scatter(frms, x_ar0)
     canvas.blit(ax.bbox)
-    plt.pause(0.001) # used for 1000 points, reasonable
+    #plt.pause(0.001) # used for 1000 points, reasonable
     #plt.pause(0.1) # used for 1000 points, reasonable
     #plt.pause(0.5) # used for 1000 points, reasonable
-#"""
+"""
+
+date_start = f_names[start_frame][0:8]
+date_end = f_names[start_frame+images][0:8]
 
 
 #"""  ### plot North / South Hemispheres scatter
 fig = plt.figure(figsize=(22,11))
 ax = plt.gca()
-#ax.set_title(r'304 $\AA$ 12-Hour Carrington Full-Surface Maps' + '\n Date: %i/%i/%i' % (dt_greg1[0], dt_greg1[1], dt_greg1[2]), y=1.01, fontweight='bold', fontsize=font_size)
+ax.set_title(r'Our Data [Northern Hemisphere] | Date Range: %s - %s' % (date_start, date_end), y=1.01, fontweight='bold', fontsize=font_size)
 ax.set_ylabel('Longitude', fontsize=font_size)
 ax.set_xlabel('Frame', fontsize=font_size)
 ax.set_xlim(0,300)
@@ -206,7 +206,7 @@ im = ax.scatter(frmN_tot, xN_tot, c=color[i-start_frame])
 
 fig = plt.figure(figsize=(22,11))
 ax = plt.gca()
-#ax.set_title(r'304 $\AA$ 12-Hour Carrington Full-Surface Maps' + '\n Date: %i/%i/%i' % (dt_greg1[0], dt_greg1[1], dt_greg1[2]), y=1.01, fontweight='bold', fontsize=font_size)
+ax.set_title(r'Our Data [Southern Hemisphere] | Date Range: %s - %s' % (date_start, date_end), y=1.01, fontweight='bold', fontsize=font_size)
 ax.set_ylabel('Longitude', fontsize=font_size)
 ax.set_xlabel('Frame', fontsize=font_size)
 ax.set_xlim(0,300)
@@ -214,18 +214,20 @@ ax.set_ylim(0,360)
 im = ax.scatter(frmS_tot, xS_tot, c=color[i-start_frame])  
 #"""
 
-"""  ### plot / fit specific AR
+#"""  ### plot / fit specific AR
 AR_xs = []
 AR_ys = []
 AR_fs = []
 AR_int = []
 AR_xerr1 = []
 AR_xerr2 = []
+AR_int_sum = []
+AR_fs_single = []
 
 for a in range(len(frmN_tot)):
 #for a in range(100):
-    if frmN_tot[a] < 190 and frmN_tot[a] > 85:
-        if xN_tot[a] > 170 and xN_tot[a] < 190:
+    if frmN_tot[a] > 200 and frmN_tot[a] < 283:
+        if xN_tot[a] > 237 and xN_tot[a] < 273:
             AR_xs = np.append(AR_xs, xN_tot[a])
             AR_ys = np.append(AR_ys, yN_tot[a])
             AR_fs = np.append(AR_fs, frmN_tot[a])
@@ -240,7 +242,8 @@ date_end = f_names[int(AR_fs[-1]+start_frame)]
 
 date_start = '%s/%s/%s' % (date_start[0:4],date_start[4:6],date_start[6:8])
 date_end = '%s/%s/%s' % (date_end[0:4],date_end[4:6],date_end[6:8])
-        
+
+       
 fig = plt.figure(figsize=(22,11))
 ax = plt.gca()
 ax.set_title(r'Active Region # | Date Range: %s - %s' % (date_start, date_end), y=1.01, fontweight='bold', fontsize=font_size)
@@ -249,8 +252,34 @@ ax.set_xlabel('Frame', fontsize=font_size)
 ax.set_xlim(AR_fs[0]-3,AR_fs[-1]+3)
 ax.set_ylim(np.min(AR_xs-AR_xerr1)-5,np.max(AR_xs+AR_xerr1)+5)  
 im = ax.scatter(AR_fs, AR_xs, AR_int)  
-ax.errorbar(AR_fs, AR_xs, yerr=[AR_xerr1, AR_xerr2], fmt='--o')
+ax.errorbar(AR_fs, AR_xs, yerr=[AR_xerr1, AR_xerr2], fmt='--')
 ax.plot(AR_fs, m*AR_fs + b, '-')
+
+fig = plt.figure(figsize=(22,11))
+ax = plt.gca()
+ax.set_title(r'Active Region # | Date Range: %s - %s' % (date_start, date_end), y=1.01, fontweight='bold', fontsize=font_size)
+ax.set_ylabel('Latitude', fontsize=font_size)
+ax.set_xlabel('Frame', fontsize=font_size)
+ax.set_xlim(AR_fs[0]-3,AR_fs[-1]+3)
+ax.set_ylim(np.min(AR_ys)-5,np.max(AR_ys)+5)  
+im = ax.scatter(AR_fs, AR_ys, AR_int)  
+
+count_fs = 0
+
+for p in range(len(AR_fs)):
+    if count_fs == 0:
+        AR_int_sum = np.append(AR_int_sum, AR_int[p])
+        AR_fs_single = np.append(AR_fs_single, AR_fs[p])
+        count_fs += 1
+    else:
+        if AR_fs[p] != AR_fs[p-1]:
+            AR_int_sum = np.append(AR_int_sum, AR_int[p])
+            AR_fs_single = np.append(AR_fs_single, AR_fs[p])
+            count_fs += 1
+        else:
+            AR_int_sum[count_fs-1] +=  AR_int[p]
+            
+    
 
 fig = plt.figure(figsize=(22,11))
 ax = plt.gca()
@@ -258,5 +287,6 @@ ax.set_title(r'Active Region # | Date Range: %s - %s' % (date_start, date_end), 
 ax.set_ylabel('Intensity', fontsize=font_size)
 ax.set_xlabel('Frame', fontsize=font_size)
 ax.set_xlim(AR_fs[0]-3,AR_fs[-1]+3)
-ax.plot(AR_fs, AR_int)
-"""        
+#ax.plot(AR_fs, AR_int)
+ax.plot(AR_fs_single, AR_int_sum)
+#"""        
