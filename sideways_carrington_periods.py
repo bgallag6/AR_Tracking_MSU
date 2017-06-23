@@ -168,7 +168,7 @@ for c in range(int(seg)):
     ax2.set_xlim(0,360)
     ax2.hist(xN_tot, bins=x_bins) 
     plt.xticks(x_ticks)
-    plt.savefig('C:/Users/Brendan/Desktop/Car_Rot_%i_%i_North.jpg' % ((c*rotations)+1, ((c+1)*rotations)), bbox_inches = 'tight')
+    #plt.savefig('C:/Users/Brendan/Desktop/Car_Rot_%i_%i_North.jpg' % ((c*rotations)+1, ((c+1)*rotations)), bbox_inches = 'tight')
     plt.close()
     
     fig = plt.figure(figsize=(22,10))
@@ -190,7 +190,7 @@ for c in range(int(seg)):
     ax2.set_xlim(0,360)
     ax2.hist(xS_tot, bins=x_bins)  
     plt.xticks(x_ticks)
-    plt.savefig('C:/Users/Brendan/Desktop/Car_Rot_%i_%i_South.jpg' % ((c*rotations)+1, ((c+1)*rotations)), bbox_inches = 'tight')
+    #plt.savefig('C:/Users/Brendan/Desktop/Car_Rot_%i_%i_South.jpg' % ((c*rotations)+1, ((c+1)*rotations)), bbox_inches = 'tight')
     plt.close()    
     #"""
         

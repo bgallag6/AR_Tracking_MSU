@@ -47,7 +47,6 @@ with open('C:/Users/Brendan/Desktop/Week3/NOAA AR/%i_NOAA_AR.csv' % year0, 'rb')
      for row in spamreader:
         if count > 0:
              date = '%i%0.2i%0.2i' % (int(row[0]),int(row[1]),int(row[2]))
-             print date
              dt = datetime.datetime.strptime(date[0:8],fmt)
              jul_date = sum(jdcal.gcal2jd(dt.year, dt.month, dt.day))
              dates = np.append(dates, jul_date)

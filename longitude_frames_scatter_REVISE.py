@@ -41,9 +41,9 @@ all_tot_int1 = tot_int1.tolist()
 all_tot_area1 = tot_area1.tolist()
 all_scaled_intensity = (np.array(all_tot_int1)/np.array(all_med_inten)[:, np.newaxis]).tolist()
 
-images = 300
-num_ar = 300
-start_frame = 2500
+images = 700
+num_ar = 700
+start_frame = 100
 int_thresh = 30
 
 #ARs = np.zeros((num_ar,3,images))
@@ -63,7 +63,8 @@ canvas = ax.figure.canvas
 #ax.set_title(r'304 $\AA$ 12-Hour Carrington Full-Surface Maps' + '\n Date: %i/%i/%i' % (dt_greg1[0], dt_greg1[1], dt_greg1[2]), y=1.01, fontweight='bold', fontsize=font_size)
 ax.set_ylabel('Longitude', fontsize=font_size)
 ax.set_xlabel('Frame', fontsize=font_size)
-ax.set_xlim(0,300)
+#ax.set_xlim(0,300)
+ax.set_xlim(0,images)
 ax.set_ylim(0,360)
 background = fig.canvas.copy_from_bbox(ax.bbox)
 plt.ion()
@@ -190,17 +191,21 @@ for i in range(start_frame,start_frame+images):
     #plt.pause(0.5) # used for 1000 points, reasonable
 """
 
+
+
+"""  
+### plot North / South Hemispheres scatter
+
 date_start = f_names[start_frame][0:8]
 date_end = f_names[start_frame+images][0:8]
 
-
-#"""  ### plot North / South Hemispheres scatter
 fig = plt.figure(figsize=(22,11))
 ax = plt.gca()
 ax.set_title(r'Our Data [Northern Hemisphere] | Date Range: %s - %s' % (date_start, date_end), y=1.01, fontweight='bold', fontsize=font_size)
 ax.set_ylabel('Longitude', fontsize=font_size)
 ax.set_xlabel('Frame', fontsize=font_size)
-ax.set_xlim(0,300)
+#ax.set_xlim(0,300)
+ax.set_xlim(0,images)
 ax.set_ylim(0,360)  
 im = ax.scatter(frmN_tot, xN_tot, c=color[i-start_frame])  
 
@@ -209,12 +214,15 @@ ax = plt.gca()
 ax.set_title(r'Our Data [Southern Hemisphere] | Date Range: %s - %s' % (date_start, date_end), y=1.01, fontweight='bold', fontsize=font_size)
 ax.set_ylabel('Longitude', fontsize=font_size)
 ax.set_xlabel('Frame', fontsize=font_size)
-ax.set_xlim(0,300)
+#ax.set_xlim(0,300)
+ax.set_xlim(0,images)
 ax.set_ylim(0,360)  
 im = ax.scatter(frmS_tot, xS_tot, c=color[i-start_frame])  
-#"""
+"""
 
-#"""  ### plot / fit specific AR
+
+#"""  
+####### plot / fit specific AR ##########
 AR_xs = []
 AR_ys = []
 AR_fs = []
@@ -224,16 +232,36 @@ AR_xerr2 = []
 AR_int_sum = []
 AR_fs_single = []
 
+
+#"""
+######### Northern ############
 for a in range(len(frmN_tot)):
 #for a in range(100):
-    if frmN_tot[a] > 200 and frmN_tot[a] < 283:
-        if xN_tot[a] > 237 and xN_tot[a] < 273:
+    if frmN_tot[a] > 336 and frmN_tot[a] < 701:
+        if xN_tot[a] > 300 and xN_tot[a] < 361:
             AR_xs = np.append(AR_xs, xN_tot[a])
             AR_ys = np.append(AR_ys, yN_tot[a])
             AR_fs = np.append(AR_fs, frmN_tot[a])
             AR_xerr1 = np.append(AR_xerr1, (xN_tot[a] - (xerr1N_tot[a]/10.)))
             AR_xerr2 = np.append(AR_xerr2, ((xerr2N_tot[a]/10.)-xN_tot[a]))
             AR_int = np.append(AR_int, intN_tot[a])
+#"""
+
+
+"""        
+######### Southern ############
+for a in range(len(frmS_tot)):
+#for a in range(100):
+    if frmS_tot[a] > 200 and frmS_tot[a] < 283:
+        if xS_tot[a] > 237 and xS_tot[a] < 273:
+            AR_xs = np.append(AR_xs, xS_tot[a])
+            AR_ys = np.append(AR_ys, yS_tot[a])
+            AR_fs = np.append(AR_fs, frmS_tot[a])
+            AR_xerr1 = np.append(AR_xerr1, (xS_tot[a] - (xerr1S_tot[a]/10.)))
+            AR_xerr2 = np.append(AR_xerr2, ((xerr2S_tot[a]/10.)-xS_tot[a]))
+            AR_int = np.append(AR_int, intS_tot[a])
+"""           
+            
             
 m, b = np.polyfit(AR_fs, AR_xs, 1)
 

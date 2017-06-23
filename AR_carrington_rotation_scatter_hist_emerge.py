@@ -19,7 +19,7 @@ import matplotlib.pyplot as plt
 from scipy.io.idl import readsav
 import jdcal
 
-#"""   
+"""   
 s = readsav('fits_strs_20161219v7.sav')
 dates = np.load('C:/Users/Brendan/Desktop/MSU_Project/Active_Longitude/image_jul_dates.npy')
 dates = np.array(dates)
@@ -54,26 +54,6 @@ num_ar = trim
 
 ARs = np.zeros((num_ar,3,images))
 count = 0
-
-for k in range(100):
-    if intensities[k] > 0:
-        ARs[count,0,0] = intensities[k]
-        ARs[count,1,0] = xcoords[k]
-        ARs[count,2,0] = ycoords[k]
-        count += 1
-
-start = dates[0]
-dt_begin = 2400000.5
-dt_dif1 = start-dt_begin    
-dt_greg1 = jdcal.jd2gcal(dt_begin,dt_dif1)
-
-color = np.zeros((images,3))
-for t in range(images):
-    color[t][0] = t*(1./images)
-    color[t][2] = 1. - t*(1./images)
-  
-plt.rcParams["font.family"] = "Times New Roman"
-font_size = 23
   
 xticks_long = [60*i for i in range(7)]
 xticks_lat = [-90+(30*i) for i in range(7)]
@@ -92,13 +72,7 @@ for i in range(int(seg)):
 #for i in range(3):
     
     start = dates[11] + (27.25*i)
-    end = start + 27
-    
-    dt_begin = 2400000.5
-    dt_dif1 = start-dt_begin   
-    dt_dif2 = (start+27)-dt_begin  
-    dt_greg1 = jdcal.jd2gcal(dt_begin,dt_dif1)
-    dt_greg2 = jdcal.jd2gcal(dt_begin,dt_dif2)
+    end = start + 27.25
     
     ind_start[i] = np.searchsorted(dates,start)  # dont' think this is exactly correct, but close?
     ind_end[i] = np.searchsorted(dates,end)
@@ -107,10 +81,6 @@ for i in range(int(seg)):
 for i in range(11,trim):
     
     start = dates[i] + 0.5*i
-    
-    dt_begin = 2400000.5
-    dt_dif1 = start-dt_begin    
-    dt_greg1 = jdcal.jd2gcal(dt_begin,dt_dif1)
     
     intensities = np.array(all_tot_int1[i])
     intensities = [0 if x < 35 else x for x in intensities]  # maybe also eliminate zeros
@@ -169,7 +139,7 @@ for c in range(count):
     avg_int[c] = np.average(ar0[0][ar0[0] != 0])
     med_int[c] = np.median(ar0[0][ar0[0] != 0])
 
-#"""
+"""
 #xbins = [3*i for i in range(120)]
 xbins = [15*i for i in range(24)]
 #for i in range(int(seg)):
@@ -194,6 +164,7 @@ for i in range(3):
     plt.xlim(0,360)
     plt.ylim(-45,45)
     
+    #plt.figure()
     plt.hist(AR_rot[:,1], bins=xbins)
                 
     #plt.savefig('C:/Users/Brendan/Desktop/%i_of_%i.pdf' % ((i+1),seg), format='pdf')
