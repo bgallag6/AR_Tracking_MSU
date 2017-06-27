@@ -11,7 +11,7 @@ import scipy.signal
 from scipy.io.idl import readsav
 import jdcal
 
-"""
+#"""
 s = readsav('fits_strs_20161219v7.sav')
 dates = np.load('C:/Users/Brendan/Desktop/MSU_Project/Active_Longitude/image_jul_dates.npy')
 dates = np.array(dates)
@@ -136,7 +136,7 @@ for i in range(1,images):
     plt.pause(0.001) # used for 1000 points, reasonable
     #plt.pause(0.1) # used for 1000 points, reasonable
     #plt.pause(0.5) # used for 1000 points, reasonable
-"""
+#"""
 
 #"""
 plt.rcParams["font.family"] = "Times New Roman"
