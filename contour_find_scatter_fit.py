@@ -22,8 +22,11 @@ dates = np.array(dates)
 f_names = np.load('C:/Users/Brendan/Desktop/MSU_Project/Active_Longitude/ar_filenames.npy')
 
 #box_2D_kernel = Box2DKernel(3)
-box_1D_kernelX = Box1DKernel(8)
-box_1D_kernelY = Box1DKernel(3)
+#box_1D_kernelX = Box1DKernel(8) # for 3 rotations
+#box_1D_kernelY = Box1DKernel(3) # for 3 rotations
+
+box_1D_kernelX = Box1DKernel(8) # for full dataset
+box_1D_kernelY = Box1DKernel(3) # for full dataset
 
 #trim = 2922  # image before jump 20140818-20151103
 trim = 2872  # last index for end of Carrington rotation
@@ -45,7 +48,7 @@ int_thresh = 30
 
 count = 0
 
-rotations = 3
+rotations = 54
 seg = ((dates[trim]-dates[11])/27.25)/rotations
   
 ind_start = np.zeros((int(seg)))
@@ -67,6 +70,8 @@ for i in range(int(seg)):
     ind_end[i] = np.searchsorted(dates,end)
 
 AR_total = np.zeros((1000,4,500))
+AR_total_raw = np.zeros((1000,4,500))
+AR_total_start_band = np.zeros((1000,4,500))
 cumulative_frames = 0
 cumulative_count = 0
 cumulative_bands = 0
@@ -155,7 +160,7 @@ for c in range(int(seg)):
     y2, x2, _ = plt.hist(xS_tot, bins=x_bins)
     elem2 = np.argmax(y2)
     bin_max2 = y2[elem2]
-    #plt.close()
+    plt.close()
     
     bin_max = np.max([bin_max1, bin_max2])*1.1
     
@@ -189,14 +194,29 @@ for c in range(int(seg)):
     plt.close()
 
     pad = 18
+    
+    #"""
+    ### South ###
     matrx = np.zeros((360+pad,int(frmS_tot[-1])-int(frmS_tot[0])+pad+1))
     matrx_lat = np.zeros((360+pad,int(frmS_tot[-1])-int(frmS_tot[0])+pad+1))
     
     for i in range(len(frmS_tot)):
         matrx[int(xS_tot[i])+(pad/2),int(frmS_tot[i])-int(frmS_tot[0])+(pad/2)] = intS_tot[i]
         matrx_lat[int(xS_tot[i])+(pad/2),int(frmS_tot[i])-int(frmS_tot[0])+(pad/2)] = yS_tot[i]
+    #"""    
     
-        
+    
+    """
+    ### North ###    
+    matrx = np.zeros((360+pad,int(frmN_tot[-1])-int(frmN_tot[0])+pad+1))
+    matrx_lat = np.zeros((360+pad,int(frmN_tot[-1])-int(frmN_tot[0])+pad+1))
+    
+    for i in range(len(frmN_tot)):
+        matrx[int(xN_tot[i])+(pad/2),int(frmN_tot[i])-int(frmN_tot[0])+(pad/2)] = intN_tot[i]
+        matrx_lat[int(xN_tot[i])+(pad/2),int(frmN_tot[i])-int(frmN_tot[0])+(pad/2)] = yN_tot[i]
+    """
+
+    
     matrx = np.flipud(matrx)
     matrx_lat = np.flipud(matrx_lat)
         
@@ -259,8 +279,8 @@ for c in range(int(seg)):
        path = mplPath.Path(paths[i].vertices)
        within = []
        for c1 in range(matrx.shape[0]):
-           points = zip([r for r in range(matrx.shape[0])],[c1 for q in range(matrx.shape[1])])  #works
-           #points = zip([r for r in range(matrx.shape[1])],[c1 for q in range(matrx.shape[1])])  #if 2nd dim > 1st dim size
+           #points = zip([r for r in range(matrx.shape[0])],[c1 for q in range(matrx.shape[1])])  #works
+           points = zip([r for r in range(matrx.shape[1])],[c1 for q in range(matrx.shape[1])])  #if 2nd dim > 1st dim size
            within_temp = path.contains_points(points)
            within = np.append(within, within_temp)
        within = np.reshape(within, (matrx.shape[0],matrx.shape[1]))
@@ -288,6 +308,14 @@ for c in range(int(seg)):
            AR_total[i-count+cumulative_bands,0,0:len(frmP)] = frmP + cumulative_frames
            AR_total[i-count+cumulative_bands,2,0:len(frmP)] = intenP
            AR_total[i-count+cumulative_bands,3,0:len(frmP)] = latP
+           
+           AR_total_raw[i-count+cumulative_bands,0,0:len(frmP)] = frmP + cumulative_frames
+           AR_total_raw[i-count+cumulative_bands,2,0:len(frmP)] = intenP
+           AR_total_raw[i-count+cumulative_bands,3,0:len(frmP)] = latP
+           
+           AR_total_start_band[i-count+cumulative_bands,0,0:len(frmP)] = frmP + cumulative_frames
+           AR_total_start_band[i-count+cumulative_bands,2,0:len(frmP)] = intenP
+           AR_total_start_band[i-count+cumulative_bands,3,0:len(frmP)] = latP
     
     cumulative_frames += (np.max(frmN_tot) - np.min(frmN_tot))
     cumulative_count += count
@@ -317,6 +345,7 @@ for c in range(int(seg)):
         
        m0, b0 = np.polyfit(frames, longitudes, 1)
        #fit_params[k] = [m, b]
+       fit_params[cumulative_bands + k] = [m0,b0]
         
        ax1.plot(frames, m0*frames + b0, 'r-')  
        
@@ -324,6 +353,8 @@ for c in range(int(seg)):
            #ARs_corrected[k,1,t] = ARs[k,1,t] - (ARs[k,0,t] - np.min(frames)) * m  # correct to start of band
            ARs_corrected[k,1,t] = ARs[k,1,t] - (ARs[k,0,t] - np.min(ARs[k,0,:])) * m0  # correct to start of plot
            AR_total[k+cumulative_bands,1,t] = ARs[k,1,t] - (ARs[k,0,t] - np.min(ARs[k,0,:])) * m0  # correct to start of plot
+           AR_total_raw[k+cumulative_bands,1,t] = ARs[k,1,t]
+           AR_total_start_band[k+cumulative_bands,1,t] = ARs[k,1,t]- (ARs[k,0,t] - np.min(frames)) * m0
                
        framesC = ARs_corrected[k,0,:]
        longitudesC = ARs_corrected[k,1,:]
@@ -337,8 +368,6 @@ for c in range(int(seg)):
        ax2.set_ylabel('Longitude', fontsize = font_size)
         
        m, b = np.polyfit(framesC, longitudesC, 1)
-       
-       fit_params[cumulative_bands + k] = [m,b]
         
        ax2.plot(framesC, m*framesC + b, 'r-')   
 
@@ -351,14 +380,15 @@ for c in range(int(seg)):
     
     num_bands[c] = (len(paths) - count)
     
+    """
     num_bins = 36 
     x_bins = [(360/num_bins)*w for w in range(num_bins+1)]
        
     long_tot = []   
     long_tot_cor = []   
     
-    xbin_scaled = np.zeros((num_bins+1))
-    #xbin_scaled = np.zeros((num_bins+1+12))  # 12 = allow for 60 deg below 0, 60 deg above 360
+    #xbin_scaled = np.zeros((num_bins+1))
+    xbin_scaled = np.zeros((num_bins+1+16))  # 16 = allow for 80 deg below 0, 80 deg above 360
        
     for k in range(len(paths)-count):
     #for k in range(1):
@@ -402,24 +432,36 @@ for c in range(int(seg)):
     
     #plt.savefig('C:/Users/Brendan/Desktop/Car_rots/AR_Histogram_Compare_Car_Rot_%i_%i.pdf' % ((c*rotations)+1, ((c+1)*rotations)))
     plt.close()
-    
+    """
     #np.save('C:/Users/Brendan/Desktop/AR_bands_S_lat.npy', AR_total)
+    #np.save('C:/Users/Brendan/Desktop/AR_bands_S_lat_raw.npy', AR_total_raw)
+    #np.save('C:/Users/Brendan/Desktop/AR_bands_S_lat_start_band.npy', AR_total_start_band)
+
+slopes = fit_params[:,0]
+slopes = slopes[slopes != 0.]    
     
-    """
-    fig = plt.figure(figsize=(11,10))
-    ax1 = plt.gca()
-    ax1.set_title('Active Region Bands [Corrected]', y = 1.01, fontsize = font_size)
-    ax1.bar(x_bins, xbin_scaled, width=5)
-    ax1.set_xlabel('Longitude', fontsize = font_size)
-    ax1.set_ylabel('Total Intensity', fontsize = font_size)
-    plt.xlim(0,360)
-    
-    plt.savefig('C:/Users/Brendan/Desktop/AR_Histogram_Intensity.pdf')   
-    """
-    
-    """
-    *** add and then subtract the padding allowing for contours to close
-    * for every frame, find distance from beginning, multiply by slope, bring point back that amount
-    * get rid of contours that are less than certain points
-    * increase longitude range to maybe -60-420 deg
-    """
+fig = plt.figure(figsize=(22,10))
+ax1 = plt.gca()
+ax1.set_title('Band Slopes: Pre-Correction', y = 1.01, fontsize = font_size)
+ax1.hist(slopes)
+ax1.set_xlabel('Longitude', fontsize = font_size)
+ax1.set_ylabel('Bin Count', fontsize = font_size)
+plt.xlim(-1,1)
+"""
+fig = plt.figure(figsize=(11,10))
+ax1 = plt.gca()
+ax1.set_title('Active Region Bands [Corrected]', y = 1.01, fontsize = font_size)
+ax1.bar(x_bins, xbin_scaled, width=5)
+ax1.set_xlabel('Longitude', fontsize = font_size)
+ax1.set_ylabel('Total Intensity', fontsize = font_size)
+plt.xlim(0,360)
+
+plt.savefig('C:/Users/Brendan/Desktop/AR_Histogram_Intensity.pdf')   
+"""
+
+"""
+*** add and then subtract the padding allowing for contours to close
+* for every frame, find distance from beginning, multiply by slope, bring point back that amount
+* get rid of contours that are less than certain points
+* increase longitude range to maybe -60-420 deg
+"""

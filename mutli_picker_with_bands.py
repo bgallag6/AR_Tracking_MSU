@@ -103,7 +103,8 @@ def onclick(event):
 
 global count
 
-ARs = np.load('C:/Users/Brendan/Desktop/AR_bands_S_lat.npy')
+ARs = np.load('C:/Users/Brendan/Desktop/AR_bands_S_full.npy')
+#ARs = AR_total
 for i in range(500):
     if ARs[i,0,0] == 0:
         count = i
@@ -131,7 +132,7 @@ for c in range(count):
     frms = ar0[0][ar0[0] != 0]
     frames[c] = (np.max(frms) - np.min(frms)) # - how many frames AR lasts
     
-    first[c] = np.min(ar0[0,:])
+    first[c] = np.min(frms)
     
     #for d in range(count):
     #    if ar0[0,d] != 0:
@@ -181,6 +182,7 @@ if 1:
     ax1.set_xlabel('Max Intensity', fontsize=font_size)
     #coll = ax1.scatter(avg_int, frames, picker = 5)
     coll = ax1.scatter(max_int, frames, picker = 5)
+    #coll = ax1.scatter(first, max_int, picker = 5)
     
     ax2 = plt.subplot2grid((11,11),(0, 6), colspan=5, rowspan=5)
     ax2 = plt.gca()
