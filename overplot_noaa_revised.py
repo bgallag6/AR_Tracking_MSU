@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Created on Wed Jun 28 14:31:34 2017
+Created on Thu Jun 29 11:40:51 2017
 
 @author: Brendan
 """
@@ -66,7 +66,7 @@ Longitude = []
 
 count = 0
 
-with open('C:/Users/Brendan/Desktop/Week3/NOAA AR/Full_NOAA_AR.csv', 'rb') as csvfile:
+with open('C:/Users/Brendan/Desktop/MSU_Project/Week3/NOAA AR/Full_NOAA_AR.csv', 'rb') as csvfile:
      spamreader = csv.reader(csvfile, delimiter=',', quotechar='|')
      
      for row in spamreader:
@@ -143,7 +143,17 @@ for c in range(5):
     frmN_tot = []
     frmS_tot = []
     
+    date_num_check = 0
+    add_half = 0
+    
     for i in range(ind_start,ind_end):
+        
+        if dates[i] == date_num_check:
+            frm_num = ((dates[i]-dates[ind_start])*2)+1
+        else: 
+            frm_num = ((dates[i]-dates[ind_start])*2)
+        
+        date_num_check = dates[i]
     
         intensities0 = np.array(all_tot_int1[i])
         intensities = intensities0[intensities0 > int_thresh] 
@@ -162,9 +172,9 @@ for c in range(5):
         #frm_temp = np.array([i-start_frame for y in range(len(xcoords))]) 
         #frmN_temp = np.array([i-start_frame for y in range(len(xN_temp))])
         #frmS_temp = np.array([i-start_frame for y in range(len(xS_temp))])
-        frm_temp = np.array([i for y in range(len(xcoords))]) 
-        frmN_temp = np.array([i for y in range(len(xN_temp))])
-        frmS_temp = np.array([i for y in range(len(xS_temp))])
+        frm_temp = np.array([frm_num for y in range(len(xcoords))]) 
+        frmN_temp = np.array([frm_num for y in range(len(xN_temp))])
+        frmS_temp = np.array([frm_num for y in range(len(xS_temp))])
         
         int_tot = np.append(int_tot, intensities)
         intN_tot = np.append(intN_tot, intN_temp)
@@ -187,43 +197,45 @@ for c in range(5):
     
     frmN_tot /= 2
     frmS_tot /= 2
-
-
+    
+    frm_bins = [30*i for i in range(13)]   
+    long_bins = [60*i for i in range(7)]
+    
+    tick_size = 19
+    
     ### plot North / South Hemispheres scatter
     fig = plt.figure(figsize=(22,10))
     ax1 = plt.gca() 
     ax1.set_title(r'NOAA Nothern Hemisphere' + '\n Date Range: %s - %s' % (date_start, date_end), y=1.01, fontweight='bold', fontsize=font_size)     
     ax1.set_ylabel('Longitude', fontsize=font_size)
-    ax1.set_xlabel('Frame', fontsize=font_size)
+    ax1.set_xlabel('Day', fontsize=font_size)
     #ax1.set_xlim(0,730)
     ax1.set_xlim(0,365)
     ax1.set_ylim(0,360)   
-    ax1.scatter(frmN_tot, xN_tot,color='blue') 
-    ax1.scatter(datesN, xN,color='red') 
+    #ax1.scatter(frmN_tot, xN_tot,color='blue', label='Our Data') 
+    ax1.scatter(datesN, xN,color='red', label='NOAA Data') 
+    plt.xticks(frm_bins, fontsize=tick_size)
+    plt.yticks(long_bins, fontsize=tick_size)
+    plt.legend(fontsize=25)
     #plt.savefig('C:/Users/Brendan/Desktop/NOAA_Data_Overplot_%i_North.pdf' % (2010+c), bbox_inches = 'tight')
+    plt.savefig('C:/Users/Brendan/Desktop/NOAA_Data_Overplot_%i_North.jpeg' % (2010+c), bbox_inches = 'tight')
     #plt.close()
     
     #"""
     fig = plt.figure(figsize=(22,10))
     ax1 = plt.gca()
-    ax1.set_title(r'NOAA Southern Hemisphere' + '\n Date Range: %s - %s' % (date_start, date_end), y=1.01, fontweight='bold', fontsize=font_size)    
+    ax1.set_title(r'Southern Hemisphere' + '\n Date Range: %s - %s' % (date_start, date_end), y=1.01, fontweight='bold', fontsize=font_size)    
     ax1.set_ylabel('Longitude', fontsize=font_size)
-    ax1.set_xlabel('Frame', fontsize=font_size)
+    ax1.set_xlabel('Day', fontsize=font_size)
     #ax1.set_xlim(0,730)
     ax1.set_xlim(0,365)
     ax1.set_ylim(0,360)  
-    ax1.scatter(frmS_tot, xS_tot,color='blue')  
-    ax1.scatter(datesS, xS, color='red')
+    ax1.scatter(frmS_tot, xS_tot,color='blue', label='Our Data')  
+    ax1.scatter(datesS, xS, color='red', label='NOAA Data')
+    plt.xticks(frm_bins,fontsize=tick_size)
+    plt.yticks(long_bins, fontsize=tick_size)
+    plt.legend(fontsize=25)
     #plt.savefig('C:/Users/Brendan/Desktop/NOAA_Data_Overplot_%i_South.pdf' % (2010+c), bbox_inches = 'tight')
+    #plt.savefig('C:/Users/Brendan/Desktop/NOAA_Data_Overplot_%i_South.jpeg' % (2010+c), bbox_inches = 'tight')
     #plt.close()    
     #"""
-
-
-
-
-
-
-
-
-
-    

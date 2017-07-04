@@ -11,11 +11,11 @@ import astropy.units as u
 import sunpy
 from sunpy.map import Map
   
-x = sunpy.map.Map('C:/Users/Brendan/Downloads/20100513_001615_304.fts')
+x = sunpy.map.Map('C:/Users/Brendan/Downloads/20130704_001615_304.fts')
 #x = sunpy.map.Map('C:/Users/Brendan/Documents/Python Scripts/test_download2.fts')
 x2 = x.data
 
-date = '2010/05/13'
+date = '2013/07/04'
 
 
 x_ticks = [300*i for i in range(13)]
@@ -38,7 +38,7 @@ ax.set_xlabel('Longitude [Deg]', fontsize=font_size)
 ax.imshow(x2, cmap='sdoaia304', vmin=0, vmax=1500)
 plt.xticks(x_ticks,x_ind,fontsize=font_size)
 plt.yticks(y_ticks,y_ind,fontsize=font_size)
-#plt.savefig('C:/Users/Brendan/Desktop/example_carrington_map.jpeg')
+#plt.savefig('C:/Users/Brendan/Desktop/example_carrington_map_better.jpeg')
 #plt.savefig('C:/Users/Brendan/Desktop/example_carrington_map.pdf', format='pdf')
 
 

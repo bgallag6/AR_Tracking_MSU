@@ -48,7 +48,7 @@ int_thresh = 30
 
 count = 0
 
-rotations = 54
+rotations = 3
 seg = ((dates[trim]-dates[11])/27.25)/rotations
   
 ind_start = np.zeros((int(seg)))
@@ -195,7 +195,7 @@ for c in range(int(seg)):
 
     pad = 18
     
-    #"""
+    """
     ### South ###
     matrx = np.zeros((360+pad,int(frmS_tot[-1])-int(frmS_tot[0])+pad+1))
     matrx_lat = np.zeros((360+pad,int(frmS_tot[-1])-int(frmS_tot[0])+pad+1))
@@ -203,10 +203,10 @@ for c in range(int(seg)):
     for i in range(len(frmS_tot)):
         matrx[int(xS_tot[i])+(pad/2),int(frmS_tot[i])-int(frmS_tot[0])+(pad/2)] = intS_tot[i]
         matrx_lat[int(xS_tot[i])+(pad/2),int(frmS_tot[i])-int(frmS_tot[0])+(pad/2)] = yS_tot[i]
-    #"""    
+    """    
     
     
-    """
+    #"""
     ### North ###    
     matrx = np.zeros((360+pad,int(frmN_tot[-1])-int(frmN_tot[0])+pad+1))
     matrx_lat = np.zeros((360+pad,int(frmN_tot[-1])-int(frmN_tot[0])+pad+1))
@@ -214,7 +214,7 @@ for c in range(int(seg)):
     for i in range(len(frmN_tot)):
         matrx[int(xN_tot[i])+(pad/2),int(frmN_tot[i])-int(frmN_tot[0])+(pad/2)] = intN_tot[i]
         matrx_lat[int(xN_tot[i])+(pad/2),int(frmN_tot[i])-int(frmN_tot[0])+(pad/2)] = yN_tot[i]
-    """
+    #"""
 
     
     matrx = np.flipud(matrx)

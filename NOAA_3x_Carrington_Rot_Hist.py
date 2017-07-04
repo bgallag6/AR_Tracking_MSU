@@ -110,7 +110,7 @@ for c in range(17):
     ax2.set_xlim(0,360)
     ax2.hist(xN[startIndN:endIndN], bins=x_bins) 
     plt.xticks(x_ticks)
-    plt.savefig('C:/Users/Brendan/Desktop/NOAA_Car_Rot_%i_%i_North.pdf' % ((c*rotations)+1, ((c+1)*rotations)), bbox_inches = 'tight')
+    #plt.savefig('C:/Users/Brendan/Desktop/NOAA_Car_Rot_%i_%i_North.pdf' % ((c*rotations)+1, ((c+1)*rotations)), bbox_inches = 'tight')
     plt.close()
     
     #"""
@@ -131,7 +131,7 @@ for c in range(17):
     ax2.set_xlim(0,360)
     ax2.hist(xS[startIndS:endIndS], bins=x_bins)  
     plt.xticks(x_ticks)
-    plt.savefig('C:/Users/Brendan/Desktop/NOAA_Car_Rot_%i_%i_South.pdf' % ((c*rotations)+1, ((c+1)*rotations)), bbox_inches = 'tight')
+    #plt.savefig('C:/Users/Brendan/Desktop/NOAA_Car_Rot_%i_%i_South.pdf' % ((c*rotations)+1, ((c+1)*rotations)), bbox_inches = 'tight')
     plt.close()    
     #"""
 

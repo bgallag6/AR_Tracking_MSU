@@ -103,7 +103,7 @@ def onclick(event):
 
 global count
 
-ARs = np.load('C:/Users/Brendan/Desktop/AR_bands_S_full.npy')
+ARs = np.load('C:/Users/Brendan/Desktop/AR_bands_N_full.npy')
 #ARs = AR_total
 for i in range(500):
     if ARs[i,0,0] == 0:

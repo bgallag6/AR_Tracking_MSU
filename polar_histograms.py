@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Created on Fri Jun 23 18:16:34 2017
+Created on Thu Jun 29 20:23:33 2017
 
 @author: Brendan
 """
@@ -17,19 +17,20 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.io.idl import readsav
 import jdcal
+from matplotlib import cm
 
 plt.rcParams["font.family"] = "Times New Roman"
 font_size = 23
     
     
-ARs = np.load('C:/Users/Brendan/Desktop/AR_bands_N.npy')
+ARs = np.load('C:/Users/Brendan/Desktop/AR_bands_S.npy')
 #ARs = AR_total
 for i in range(500):
     if ARs[i,0,0] == 0:
         count = i
         break
     
-num_bands = np.load('C:/Users/Brendan/Desktop/num_bands_N.npy')
+num_bands = np.load('C:/Users/Brendan/Desktop/num_bands_S.npy')
 #num_bands = num_bands
 
 number = 0
@@ -91,6 +92,13 @@ for c in range(3):
     max1 = y1.tolist().index(y2[-1])
     max2 = y1.tolist().index(y2[-2])
     
+    y3 = y1/(np.std(y1))
+    y4 = [0 if x < 2. else x for x in y3]
+        
+    
+    
+    
+    
     for u in range(len(norm1)):
         if u != max1:
             norm1[u] = 0
@@ -99,56 +107,29 @@ for c in range(3):
             norm2[u] = 0
     
         
-        
-        #y2, x2, _ = plt.hist(xS_temp, bins=x_bins)
-        #elem2 = np.argmax(y2)
-        #bin_max2 = y2[elem2]
-        #plt.close()
-        
-        #bin_max = np.max([bin_max1, bin_max2])*1.1   
-        #"""  ### plot North / South Hemispheres scatter
-    #"""
-        
-    y_lim = 0.25
+    fig = plt.figure(figsize=(15,17))
+    ax1 = fig.add_axes([0.1, 0.1, 0.75, 0.75], polar=True)
+    ax1.set_title(r'Southern Hemisphere' + '\n 3x Rotation Periods: %i-%i' % ((c*3)+1,((c+1)*3)), y=1.08, fontweight='bold', fontsize=font_size) 
+    #ax1 = plt.subplot(111, projection='polar')
+    N = num_bins
+    theta = np.arange(0.0, 2*np.pi, 2*np.pi/N)
+    radii = y4
+    width = [np.pi/6 for z in range(12)]
+    bars = ax1.bar(theta, radii, width=width, bottom=1.5)
+    ax1.set_ylim(0,4)
+    #ax1.set_ylabel('Sigma')
+    for r,bar in zip(radii, bars):
+        if r >= 2. and r < 3.:
+            bar.set_facecolor('orange')
+        elif r >= 3:
+            bar.set_facecolor('red')
+        #bar.set_facecolor( cm.jet(r/3.))
+        bar.set_alpha(0.7)
     
-    if c == rot_start:
-        fig = plt.figure(figsize=(10,22))
-        plt.suptitle(r'Southern Hemisphere' + '\n 3x Rotation Periods: %i-%i' % (rot_start,rot_end), y=0.97, fontweight='bold', fontsize=font_size) 
-        #plt.suptitle(r'Northern Hemisphere' + '\n 7x Rotation Periods: %i-%i' % (rot_start,rot_end), y=0.97, fontweight='bold', fontsize=font_size) 
-        ax1 = plt.subplot2grid((18,1),(c-rot_start, 0), colspan=1, rowspan=1)
-        ax1 = plt.gca()         
-        ax1.set_ylabel('%i' % (c+1), fontsize=font_size)
-        ax1.set_xlim(0,360)   
-        ax1.set_ylim(0,y_lim)
-        #ax1.hist(norm1, bins=x_bins) 
-        #ax1.plot(x_bins2, norm1)
-        ax1.bar(x_bins2, norm1, width=deg/3)
-        #ax1.bar(x_bins2, norm2, width=deg/3, color='black')
-    elif c == rot_end-1: 
-        ax1 = plt.subplot2grid((18,1),(c-rot_start, 0), colspan=1, rowspan=1, sharey=ax1)
-        ax1 = plt.gca()      
-        ax1.set_xlim(0,360) 
-        ax1.set_ylim(0,y_lim)
-        ax1.set_ylabel('%i' % (c+1), fontsize=font_size)
-        ax1.set_xlabel('Longitude', fontsize=font_size)
-        plt.xticks(x_bins)
-        #ax1.plot(x_bins2, norm1)
-        ax1.bar(x_bins2, norm1, width=deg/3)
-        #ax1.bar(x_bins2, norm2, width=deg/3, color='black')
-    else:
-        ax1 = plt.subplot2grid((18,1),(c-rot_start, 0), colspan=1, rowspan=1, sharex=ax1, sharey=ax1)
-        ax1 = plt.gca()    
-        ax1.set_xlim(0,360)  
-        ax1.set_ylim(0,y_lim)
-        ax1.set_ylabel('%i' % (c+1), fontsize=font_size)
-        ax1.set_xticklabels([])
-        #ax1.hist(norm1, bins=x_bins) 
-        ax1.bar(x_bins2, norm1, width=deg/3)
-        #ax1.bar(x_bins2, norm2, width=deg/3, color='black')
-        #ax1.plot(x_bins2, norm1)
-    #"""
-    
-#plt.savefig('C:/Users/Brendan/Desktop/3x_Car_Rot_%i_%i_North_Emerge_Bands_Int5.pdf' % (rot_start,rot_end), bbox_inches = 'tight')
+    #plt.savefig('C:/Users/Brendan/Desktop/polar_hist/3x_Car_Rot_%i_%i_South_Polar_sigma.jpeg' % ((c*3)+1,((c+1)*3)), bbox_inches = 'tight')
+
+
+
 #plt.savefig('C:/Users/Brendan/Desktop/3x_Car_Rot_%i_%i_South_%ideg.pdf' % (rot_start,rot_end,deg), bbox_inches = 'tight')
 #plt.close()
     
