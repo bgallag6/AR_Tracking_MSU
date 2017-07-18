@@ -21,12 +21,11 @@ dates = np.load('C:/Users/Brendan/Desktop/MSU_Project/Active_Longitude/image_jul
 dates = np.array(dates)
 f_names = np.load('C:/Users/Brendan/Desktop/MSU_Project/Active_Longitude/ar_filenames.npy')
 
-#box_2D_kernel = Box2DKernel(3)
 #box_1D_kernelX = Box1DKernel(8) # for 3 rotations
 #box_1D_kernelY = Box1DKernel(3) # for 3 rotations
 
-box_1D_kernelX = Box1DKernel(8) # for full dataset
-box_1D_kernelY = Box1DKernel(3) # for full dataset
+box_1D_kernelX = Box1DKernel(5) # for full dataset
+box_1D_kernelY = Box1DKernel(2) # for full dataset
 
 #trim = 2922  # image before jump 20140818-20151103
 trim = 2872  # last index for end of Carrington rotation
@@ -60,18 +59,15 @@ for i in range(int(seg)):
     start = dates[11] + ((27.25*i)*rotations)
     end = start + (27.25*rotations)
     
-    dt_begin = 2400000.5
-    dt_dif1 = start-dt_begin   
-    dt_dif2 = (start+27)-dt_begin  
-    dt_greg1 = jdcal.jd2gcal(dt_begin,dt_dif1)
-    dt_greg2 = jdcal.jd2gcal(dt_begin,dt_dif2)
-    
-    ind_start[i] = np.searchsorted(dates,start)  # dont' think this is exactly correct, but close?
-    ind_end[i] = np.searchsorted(dates,end)
+    ind_start[i] = np.searchsorted(dates,start)  # carrington rotations
+    ind_end[i] = np.searchsorted(dates,end)  # carrington rotations
 
-AR_total = np.zeros((1000,4,500))
-AR_total_raw = np.zeros((1000,4,500))
-AR_total_start_band = np.zeros((1000,4,500))
+#AR_total = np.zeros((1000,4,500))
+#AR_total_raw = np.zeros((1000,4,500))
+#AR_total_start_band = np.zeros((1000,4,500))
+AR_total = np.zeros((1000,5,1000))  # frame, longitude, intensity, latitude, area
+AR_total_raw = np.zeros((1000,5,1000))
+AR_total_start_band = np.zeros((1000,5,1000))
 cumulative_frames = 0
 cumulative_count = 0
 cumulative_bands = 0
@@ -79,8 +75,12 @@ fit_params = np.zeros((1000,2))
 
 num_bands = np.zeros((int(seg)))
 
+#ind_start = [11,417,1115,1825,2511] # yearly
+#ind_end = [416,1114,1824,2510,2710]
+
 for c in range(int(seg)):
-#for c in range(3,4):
+#for c in range(len(ind_start)):
+#for c in range(3):
     
     date_start = f_names[int(ind_start[c])][0:8]
     date_end = f_names[int(ind_end[c])][0:8]
@@ -94,6 +94,9 @@ for c in range(int(seg)):
     int_tot = []
     intN_tot = []
     intS_tot = []
+    area_tot = []
+    areaN_tot = []
+    areaS_tot = []
     x_tot = []
     xN_tot = []
     xS_tot = []
@@ -103,11 +106,15 @@ for c in range(int(seg)):
     frm_tot = []
     frmN_tot = []
     frmS_tot = []
+
     
     for i in range(int(ind_start[c]),int(ind_end[c])):
     
         intensities0 = np.array(all_tot_int1[i])
         intensities = intensities0[intensities0 > int_thresh] 
+        
+        area0 = np.array(all_tot_area1[i])
+        area = area0[intensities0 > int_thresh]
         
         xcoords0 = np.array(all_cen_coords[i])[:,0]
         ycoords0 = np.array(all_cen_coords[i])[:,1]
@@ -121,6 +128,8 @@ for c in range(int(seg)):
         yS_temp = ycoords[ycoords < 0]
         intN_temp = intensities[ycoords > 0]
         intS_temp = intensities[ycoords < 0]
+        areaN_temp = area[ycoords > 0]
+        areaS_temp = area[ycoords < 0]
         
         #frm_temp = np.array([i-start_frame for y in range(len(xcoords))]) 
         #frmN_temp = np.array([i-start_frame for y in range(len(xN_temp))])
@@ -132,6 +141,9 @@ for c in range(int(seg)):
         int_tot = np.append(int_tot, intensities)
         intN_tot = np.append(intN_tot, intN_temp)
         intS_tot = np.append(intS_tot, intS_temp)
+        area_tot = np.append(area_tot, area)
+        areaN_tot = np.append(areaN_tot, areaN_temp)
+        areaS_tot = np.append(areaS_tot, areaS_temp)
         x_tot = np.append(x_tot, xcoords)
         xN_tot = np.append(xN_tot, xN_temp)
         xS_tot = np.append(xS_tot, xS_temp)
@@ -141,12 +153,6 @@ for c in range(int(seg)):
         frm_tot = np.append(frm_tot, frm_temp)
         frmN_tot = np.append(frmN_tot, frmN_temp)
         frmS_tot = np.append(frmS_tot, frmS_temp)
-
-        #im = ax.scatter(frm_temp, xcoords)
-        #canvas.blit(ax.bbox)
-        #plt.pause(0.001) # used for 1000 points, reasonable
-        #plt.pause(0.1) # used for 1000 points, reasonable
-        #plt.pause(0.5) # used for 1000 points, reasonable
     
     
     x_bins = [20*l for l in range(19)]
@@ -163,14 +169,6 @@ for c in range(int(seg)):
     plt.close()
     
     bin_max = np.max([bin_max1, bin_max2])*1.1
-    
-    #np.save('C:/Users/Brendan/Desktop/framesN_tot.npy', frmN_tot)
-    #np.save('C:/Users/Brendan/Desktop/xN_tot.npy', xN_tot)
-    #np.save('C:/Users/Brendan/Desktop/intN_tot.npy', intN_tot)
-
-    #frmN_tot = np.load('C:/Users/Brendan/Desktop/framesN_tot.npy')
-    #xN_tot = np.load('C:/Users/Brendan/Desktop/xN_tot.npy')
-    #intN_tot = np.load('C:/Users/Brendan/Desktop/intN_tot.npy')
     
     ### plot North / South Hemispheres scatter
     fig = plt.figure(figsize=(22,10))
@@ -195,30 +193,35 @@ for c in range(int(seg)):
 
     pad = 18
     
-    """
+    #"""
     ### South ###
     matrx = np.zeros((360+pad,int(frmS_tot[-1])-int(frmS_tot[0])+pad+1))
     matrx_lat = np.zeros((360+pad,int(frmS_tot[-1])-int(frmS_tot[0])+pad+1))
+    matrx_area = np.zeros((360+pad,int(frmS_tot[-1])-int(frmS_tot[0])+pad+1))
     
     for i in range(len(frmS_tot)):
         matrx[int(xS_tot[i])+(pad/2),int(frmS_tot[i])-int(frmS_tot[0])+(pad/2)] = intS_tot[i]
         matrx_lat[int(xS_tot[i])+(pad/2),int(frmS_tot[i])-int(frmS_tot[0])+(pad/2)] = yS_tot[i]
-    """    
+        matrx_area[int(xS_tot[i])+(pad/2),int(frmS_tot[i])-int(frmS_tot[0])+(pad/2)] = areaS_tot[i]
+    #"""    
     
     
-    #"""
+    """
     ### North ###    
     matrx = np.zeros((360+pad,int(frmN_tot[-1])-int(frmN_tot[0])+pad+1))
     matrx_lat = np.zeros((360+pad,int(frmN_tot[-1])-int(frmN_tot[0])+pad+1))
+    matrx_area = np.zeros((360+pad,int(frmN_tot[-1])-int(frmN_tot[0])+pad+1))
     
     for i in range(len(frmN_tot)):
         matrx[int(xN_tot[i])+(pad/2),int(frmN_tot[i])-int(frmN_tot[0])+(pad/2)] = intN_tot[i]
         matrx_lat[int(xN_tot[i])+(pad/2),int(frmN_tot[i])-int(frmN_tot[0])+(pad/2)] = yN_tot[i]
-    #"""
+        matrx_area[int(xN_tot[i])+(pad/2),int(frmN_tot[i])-int(frmN_tot[0])+(pad/2)] = areaN_tot[i]
+    """
 
     
     matrx = np.flipud(matrx)
     matrx_lat = np.flipud(matrx_lat)
+    matrx_area = np.flipud(matrx_area)
         
     matrx[matrx < 1] = np.NaN
     matrx0 = matrx
@@ -247,11 +250,16 @@ for c in range(int(seg)):
     y = np.arange(0, matrx.shape[0], delta)
     X, Y = np.meshgrid(x, y)
    
-    plt.figure()
-    plt.imshow(matrx0)
+    fig = plt.figure()
+    ax = fig.add_subplot(111)
+    plt.title('Southern Hemisphere: Contours', y=1.01, fontsize=font_size)
+    plt.xlabel('Frame', fontsize=font_size-3)
+    plt.ylabel('Longitude', fontsize=font_size-3)    
+    ax.imshow(matrx0)
     CS = plt.contour(X, Y, smoothed_data_box, levels=[0])
     plt.clabel(CS, inline=1, fontsize=10)
-    #plt.savefig('C:/Users/Brendan/Desktop/Car_rots/contours_Car_Rot_%i_%i.pdf' % ((c*rotations)+1, ((c+1)*rotations)))
+    ax.set_aspect(0.5)
+    #plt.savefig('C:/Users/Brendan/Desktop/South_contours_5x2y_%i.jpeg' % (c), bbox_inches='tight')
     plt.close()       
        
     level0 = CS.levels[0]
@@ -269,8 +277,10 @@ for c in range(int(seg)):
         
     long_arr = np.flipud(long_arr)
     
-    ARs = np.zeros((len(paths),4,500))  # frame, long, int
-    ARs_corrected = np.zeros((len(paths),4,500))  # frame, long, int
+    #ARs = np.zeros((len(paths),4,500))
+    #ARs_corrected = np.zeros((len(paths),4,500))
+    ARs = np.zeros((len(paths),5,1000))  # frame, longitude, intensity, latitude, area
+    ARs_corrected = np.zeros((len(paths),5,1000))
     
     count = 0  # account for # of bands not significant
     
@@ -288,38 +298,46 @@ for c in range(int(seg)):
        lon = long_arr[np.where(within == True)]
        inten = np.nan_to_num(matrx0)[np.where(within == True)]
        lat = matrx_lat[np.where(within == True)]
+       are = matrx_area[np.where(within == True)]
        frmP = frm[np.where(inten > 0)]
        #print paths[i].vertices.shape[0], len(frmP)
        lonP = lon[np.where(inten > 0)]
        intenP = inten[np.where(inten > 0)]
        latP = lat[np.where(inten > 0)]
+       areaP = are[np.where(inten > 0)]
        if len(frmP) < 7:
            count += 1
        else:
-           ARs[i-count,0,0:len(frmP)] = frmP
+           #ARs[i-count,0,0:len(frmP)] = frmP
+           ARs[i-count,0,0:len(frmP)] = frmP - (pad/2)  # account for padding introduce originally
            ARs[i-count,1,0:len(frmP)] = lonP
            ARs[i-count,2,0:len(frmP)] = intenP
            ARs[i-count,3,0:len(frmP)] = latP
+           ARs[i-count,4,0:len(frmP)] = areaP
            
            ARs_corrected[i-count,0,0:len(frmP)] = frmP
            ARs_corrected[i-count,2,0:len(frmP)] = intenP
            ARs_corrected[i-count,3,0:len(frmP)] = latP
+           ARs_corrected[i-count,4,0:len(frmP)] = areaP
            
-           AR_total[i-count+cumulative_bands,0,0:len(frmP)] = frmP + cumulative_frames
+           #AR_total[i-count+cumulative_bands,0,0:len(frmP)] = frmP + cumulative_frames
+           AR_total[i-count+cumulative_bands,0,0:len(frmP)] = frmP + cumulative_frames - (pad/2)
            AR_total[i-count+cumulative_bands,2,0:len(frmP)] = intenP
            AR_total[i-count+cumulative_bands,3,0:len(frmP)] = latP
+           AR_total[i-count+cumulative_bands,4,0:len(frmP)] = areaP
            
            AR_total_raw[i-count+cumulative_bands,0,0:len(frmP)] = frmP + cumulative_frames
            AR_total_raw[i-count+cumulative_bands,2,0:len(frmP)] = intenP
            AR_total_raw[i-count+cumulative_bands,3,0:len(frmP)] = latP
+           AR_total_raw[i-count+cumulative_bands,4,0:len(frmP)] = areaP
            
            AR_total_start_band[i-count+cumulative_bands,0,0:len(frmP)] = frmP + cumulative_frames
            AR_total_start_band[i-count+cumulative_bands,2,0:len(frmP)] = intenP
            AR_total_start_band[i-count+cumulative_bands,3,0:len(frmP)] = latP
+           AR_total_start_band[i-count+cumulative_bands,4,0:len(frmP)] = areaP
     
     cumulative_frames += (np.max(frmN_tot) - np.min(frmN_tot))
     cumulative_count += count
-    #fit_params = np.zeros((len(paths)-count,2))
     
     for k in range(len(paths)-count):
     #for k in range(1):
@@ -334,17 +352,19 @@ for c in range(int(seg)):
        #plt.scatter(frmP,lonP,intenP)
        frames = ARs[k,0,:]
        longitudes = ARs[k,1,:]
-       frames = frames[frames > 0]
-       longitudes = longitudes[longitudes > 0]
+       intensity = ARs[k,2,:]
+       #frames = frames[frames > 0]
+       frames = frames[intensity > 0]
+       #longitudes = longitudes[longitudes > 0]
+       longitudes = longitudes[intensity > 0]
        ax1.set_title('Uncorrected', y = 1.01, fontsize = font_size)
        ax1.scatter(frames, longitudes)
-       ax1.set_xlim(0,175)
+       #ax1.set_xlim(0,175)
        ax1.set_ylim(0,378)
        ax1.set_xlabel('Frame', fontsize = font_size)
        ax1.set_ylabel('Longitude', fontsize = font_size)
         
        m0, b0 = np.polyfit(frames, longitudes, 1)
-       #fit_params[k] = [m, b]
        fit_params[cumulative_bands + k] = [m0,b0]
         
        ax1.plot(frames, m0*frames + b0, 'r-')  
@@ -362,7 +382,7 @@ for c in range(int(seg)):
        longitudesC = longitudesC[longitudesC != 0.]
        ax2.set_title('Corrected', y = 1.01, fontsize = font_size)
        ax2.scatter(framesC, longitudesC)
-       ax2.set_xlim(0,175)
+       #ax2.set_xlim(0,175)
        ax2.set_ylim(0,378)
        ax2.set_xlabel('Frame', fontsize = font_size)
        ax2.set_ylabel('Longitude', fontsize = font_size)
@@ -372,7 +392,7 @@ for c in range(int(seg)):
        ax2.plot(framesC, m*framesC + b, 'r-')   
 
     #"""
-    #plt.savefig('C:/Users/Brendan/Desktop/Car_rots/AR_Bands_Compare_Car_Rot_%i_%i.pdf' % ((c*rotations)+1, ((c+1)*rotations)))
+    plt.savefig('C:/Users/Brendan/Desktop/south_5x2y_30int/South_AR_Bands_Compare_%i_5x2y.jpeg' % (c))
     plt.close()    
      
     print (len(paths) - count) 

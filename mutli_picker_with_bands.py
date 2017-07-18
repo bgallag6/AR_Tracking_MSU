@@ -81,9 +81,10 @@ def onclick(event):
 
     #ax2.plot(area_ar0)
     ax2.set_ylabel('Latitude', fontsize=font_size)
-    ax2.set_xlabel('Longitude', fontsize=font_size)
-    #ax2.scatter(frm_arr, x_coords, int_ar0, c=color_copy)
-    ax2.scatter(x_coords, y_coords, int_ar0, c=color_copy)
+    ax2.set_xlabel('Frame', fontsize=font_size)
+    ax2.scatter(frm_arr, y_coords)
+    ax2.set_xlim(np.min(frm_arr)-10,np.max(frm_arr)+10)
+    #ax2.scatter(x_coords, y_coords, int_ar0, c=color_copy)  # lat vs long
       
     ax3.set_ylabel('Longitude', fontsize=font_size)
     ax3.set_xlabel('Frame', fontsize=font_size)
@@ -103,9 +104,11 @@ def onclick(event):
 
 global count
 
-ARs = np.load('C:/Users/Brendan/Desktop/AR_bands_N_full.npy')
-#ARs = AR_total
-for i in range(500):
+#ARs = np.load('C:/Users/Brendan/Desktop/MSU_Project/AR_bands_S_lat.npy')
+#ARs = np.load('C:/Users/Brendan/Desktop/AR_bands_N_3x_15int_3smooth.npy')
+ARs = AR_total
+#for i in range(500):
+for i in range(1000):
     if ARs[i,0,0] == 0:
         count = i
         break
@@ -188,7 +191,7 @@ if 1:
     ax2 = plt.gca()
     ax2.plot(0, 0)
     ax2.set_ylabel('Latitude', fontsize=font_size)
-    ax2.set_xlabel('Longitude', fontsize=font_size)
+    ax2.set_xlabel('Frame', fontsize=font_size)
     
     ax3 = plt.subplot2grid((11,11),(6, 6), colspan=5, rowspan=5)
     ax3 = plt.gca()

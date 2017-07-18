@@ -218,7 +218,7 @@ for c in range(5):
     plt.yticks(long_bins, fontsize=tick_size)
     plt.legend(fontsize=25)
     #plt.savefig('C:/Users/Brendan/Desktop/NOAA_Data_Overplot_%i_North.pdf' % (2010+c), bbox_inches = 'tight')
-    plt.savefig('C:/Users/Brendan/Desktop/NOAA_Data_Overplot_%i_North.jpeg' % (2010+c), bbox_inches = 'tight')
+    #plt.savefig('C:/Users/Brendan/Desktop/NOAA_Data_Overplot_%i_North.jpeg' % (2010+c), bbox_inches = 'tight')
     #plt.close()
     
     #"""
