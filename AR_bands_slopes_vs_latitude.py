@@ -13,8 +13,10 @@ from scipy.stats.stats import pearsonr
 #ARsS = np.load('C:/Users/Brendan/Desktop/MSU_Project/AR_bands_S_lat.npy')
 #fit_params = np.load('C:/Users/Brendan/Desktop/AR_slopes_S_1x_Rot.npy')
 #ARs = np.load('C:/Users/Brendan/Desktop/AR_bands_S_1x_Rot.npy')
-fit_paramsS = fit_params
-ARsS = AR_total
+fit_paramsS = np.load('C:/Users/Brendan/Desktop/AL_smoothing/AR_slopes_S_3x_30int_5x2ysmooth.npy')
+ARsS = np.load('C:/Users/Brendan/Desktop/AL_smoothing/AR_bands_S_3x_30int_5x2ysmooth.npy')
+#fit_paramsS = fit_params
+#ARsS = AR_total
 
 count = 0
 #for i in range(500):

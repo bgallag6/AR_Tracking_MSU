@@ -21,11 +21,14 @@ dates = np.load('C:/Users/Brendan/Desktop/MSU_Project/Active_Longitude/image_jul
 dates = np.array(dates)
 f_names = np.load('C:/Users/Brendan/Desktop/MSU_Project/Active_Longitude/ar_filenames.npy')
 
+smooth_x = 5
+smooth_y = 2
+
 #box_1D_kernelX = Box1DKernel(8) # for 3 rotations
 #box_1D_kernelY = Box1DKernel(3) # for 3 rotations
 
-box_1D_kernelX = Box1DKernel(5) # for full dataset
-box_1D_kernelY = Box1DKernel(2) # for full dataset
+box_1D_kernelX = Box1DKernel(smooth_x) # for full dataset
+box_1D_kernelY = Box1DKernel(smooth_y) # for full dataset
 
 #trim = 2922  # image before jump 20140818-20151103
 trim = 2872  # last index for end of Carrington rotation
@@ -357,6 +360,7 @@ for c in range(int(seg)):
        frames = frames[intensity > 0]
        #longitudes = longitudes[longitudes > 0]
        longitudes = longitudes[intensity > 0]
+       intensity = intensity[intensity > 0]
        ax1.set_title('Uncorrected', y = 1.01, fontsize = font_size)
        ax1.scatter(frames, longitudes)
        #ax1.set_xlim(0,175)
@@ -364,7 +368,8 @@ for c in range(int(seg)):
        ax1.set_xlabel('Frame', fontsize = font_size)
        ax1.set_ylabel('Longitude', fontsize = font_size)
         
-       m0, b0 = np.polyfit(frames, longitudes, 1)
+       #m0, b0 = np.polyfit(frames, longitudes, 1)
+       m0, b0 = np.polyfit(frames, longitudes, 1, w=intensity)  # assign higher weight to stronger points
        fit_params[cumulative_bands + k] = [m0,b0]
         
        ax1.plot(frames, m0*frames + b0, 'r-')  
@@ -392,15 +397,19 @@ for c in range(int(seg)):
        ax2.plot(framesC, m*framesC + b, 'r-')   
 
     #"""
-    plt.savefig('C:/Users/Brendan/Desktop/south_5x2y_30int/South_AR_Bands_Compare_%i_5x2y.jpeg' % (c))
+    #plt.savefig('C:/Users/Brendan/Desktop/south_5x2y_30int/South_AR_Bands_Compare_%i_5x2y.jpeg' % (c))
     plt.close()    
      
     print (len(paths) - count) 
     cumulative_bands += (len(paths) - count)    
     
     num_bands[c] = (len(paths) - count)
-    
-    """
+
+#np.save('C:/Users/Brendan/Desktop/AR_bands_S_3x_%iint_%ix%iysmooth_slopes_int.npy' % (int_thresh,smooth_x,smooth_y), AR_total)
+#np.save('C:/Users/Brendan/Desktop/num_bands_S_3x_%iint_%ix%iysmooth_slopes_int.npy' % (int_thresh,smooth_x,smooth_y), num_bands)
+#np.save('C:/Users/Brendan/Desktop/AR_slopes_S_3x_%iint_%ix%iysmooth_slopes_int.npy' % (int_thresh,smooth_x,smooth_y), fit_params)
+
+"""
     num_bins = 36 
     x_bins = [(360/num_bins)*w for w in range(num_bins+1)]
        
@@ -457,6 +466,7 @@ for c in range(int(seg)):
     #np.save('C:/Users/Brendan/Desktop/AR_bands_S_lat_raw.npy', AR_total_raw)
     #np.save('C:/Users/Brendan/Desktop/AR_bands_S_lat_start_band.npy', AR_total_start_band)
 
+"""
 slopes = fit_params[:,0]
 slopes = slopes[slopes != 0.]    
     
@@ -467,6 +477,8 @@ ax1.hist(slopes)
 ax1.set_xlabel('Longitude', fontsize = font_size)
 ax1.set_ylabel('Bin Count', fontsize = font_size)
 plt.xlim(-1,1)
+"""
+
 """
 fig = plt.figure(figsize=(11,10))
 ax1 = plt.gca()

@@ -108,8 +108,8 @@ for h in range(len(frm_boundsN_H)):
     #plt.xlim(0,180)
     plt.xlim(0,360)
     #plt.ylim(0,360)
-    plt.ylim(0,45)
-    #plt.ylim(-45,0)
+    #plt.ylim(0,45)
+    plt.ylim(-45,0)
     legend = plt.legend(fontsize=font_size)    
     
     
@@ -128,12 +128,12 @@ for h in range(len(frm_boundsN_H)):
     legend = plt.legend(fontsize=font_size)
     for label in legend.get_lines():
                 label.set_linewidth(3.0)  # the legend line width
-    #plt.savefig('C:/Users/Brendan/Desktop/AR_NOAA_HMI_%i_South_%i_Rev.jpeg' % (2011, h), bbox_inches='tight')
+    #plt.savefig('C:/Users/Brendan/Desktop/AR_NOAA_HMI_%i_South_%i_Rev.jpeg' % (2012, h), bbox_inches='tight')
        
-    """   
+    #"""   
     fig = plt.figure(figsize=(22,10))
-    plt.suptitle('Active Region Evolution: EUV vs NOAA vs HMI Seismic' + '\n %i: Northern Hemisphere' % (2011), y=0.97, fontsize=font_size)
-    #plt.suptitle('Active Region Evolution: EUV vs NOAA vs HMI Seismic' + '\n %i: Southern Hemisphere' % (2011), y=0.97, fontsize=font_size)         
+    #plt.suptitle('Active Region Evolution: EUV vs NOAA vs HMI Seismic' + '\n %i: Northern Hemisphere' % (2011), y=0.97, fontsize=font_size)
+    plt.suptitle('Active Region Evolution: EUV vs NOAA vs HMI Seismic' + '\n %i: Southern Hemisphere' % (2012), y=0.97, fontsize=font_size)         
     ax2 = plt.gca()
     ax2 = plt.subplot2grid((1,1),(0, 0), colspan=1, rowspan=1)
     #plt.plot(AR_frm, AR_int, color='blue', label='EUV')
@@ -150,6 +150,6 @@ for h in range(len(frm_boundsN_H)):
     legend = plt.legend(fontsize=font_size)
     for label in legend.get_lines():
                 label.set_linewidth(3.0)  # the legend line width
-    #plt.savefig('C:/Users/Brendan/Desktop/AR_NOAA_HMI_%i_South_%i_Rev2.jpeg' % (2011, h), bbox_inches='tight')
+    #plt.savefig('C:/Users/Brendan/Desktop/AR_NOAA_HMI_%i_South_%i_Rev2.jpeg' % (2012, h), bbox_inches='tight')
     #plt.savefig('C:/Users/Brendan/Desktop/AR_NOAA_HMI_%i_North_%i_Rev2.jpeg' % (2011, h), bbox_inches='tight')
-    """
+    #"""

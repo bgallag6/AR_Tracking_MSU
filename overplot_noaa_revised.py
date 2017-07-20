@@ -51,7 +51,7 @@ all_tot_int1 = tot_int1.tolist()
 all_tot_area1 = tot_area1.tolist()
 all_scaled_intensity = (np.array(all_tot_int1)/np.array(all_med_inten)[:, np.newaxis]).tolist()
 
-int_thresh = 0
+int_thresh = 30
 
 plt.rcParams["font.family"] = "Times New Roman"
 font_size = 23
@@ -97,7 +97,7 @@ x_ticks = [40*l for l in range(10)]
 
 
 for c in range(5):
-#for c in range(1,2):
+#for c in range(3):
     
     yr_ind_start = np.searchsorted(datesD,'%i' % (2010+c))
     yr_ind_end = np.searchsorted(datesD,'%i' % (2010+1+c))
@@ -150,6 +150,7 @@ for c in range(5):
         
         if dates[i] == date_num_check:
             frm_num = ((dates[i]-dates[ind_start])*2)+1
+            #frm_num0 = ((dates[i]-dates[ind_start])*2)+1
         else: 
             frm_num = ((dates[i]-dates[ind_start])*2)
         
@@ -189,8 +190,8 @@ for c in range(5):
         frmN_tot = np.append(frmN_tot, frmN_temp)
         frmS_tot = np.append(frmS_tot, frmS_temp)
     
-    frmN_tot -= frmN_tot[0]
-    frmS_tot -= frmS_tot[0]
+    #frmN_tot -= frmN_tot[0]  # took out - caused intensity threshold to shift points
+    #frmS_tot -= frmS_tot[0]
     
     datesN /= 2
     datesS /= 2    
@@ -206,18 +207,18 @@ for c in range(5):
     ### plot North / South Hemispheres scatter
     fig = plt.figure(figsize=(22,10))
     ax1 = plt.gca() 
-    ax1.set_title(r'NOAA Nothern Hemisphere' + '\n Date Range: %s - %s' % (date_start, date_end), y=1.01, fontweight='bold', fontsize=font_size)     
+    ax1.set_title(r'Nothern Hemisphere' + '\n Date Range: %s - %s' % (date_start, date_end), y=1.01, fontweight='bold', fontsize=font_size)     
     ax1.set_ylabel('Longitude', fontsize=font_size)
     ax1.set_xlabel('Day', fontsize=font_size)
     #ax1.set_xlim(0,730)
     ax1.set_xlim(0,365)
     ax1.set_ylim(0,360)   
-    #ax1.scatter(frmN_tot, xN_tot,color='blue', label='Our Data') 
+    ax1.scatter(frmN_tot, xN_tot,color='blue', label='Our Data') 
     ax1.scatter(datesN, xN,color='red', label='NOAA Data') 
     plt.xticks(frm_bins, fontsize=tick_size)
     plt.yticks(long_bins, fontsize=tick_size)
     plt.legend(fontsize=25)
-    #plt.savefig('C:/Users/Brendan/Desktop/NOAA_Data_Overplot_%i_North.pdf' % (2010+c), bbox_inches = 'tight')
+    plt.savefig('C:/Users/Brendan/Desktop/AR_NOAA_Data_Overplot_%i_North.pdf' % (2010+c), bbox_inches = 'tight')
     #plt.savefig('C:/Users/Brendan/Desktop/NOAA_Data_Overplot_%i_North.jpeg' % (2010+c), bbox_inches = 'tight')
     #plt.close()
     
@@ -235,7 +236,7 @@ for c in range(5):
     plt.xticks(frm_bins,fontsize=tick_size)
     plt.yticks(long_bins, fontsize=tick_size)
     plt.legend(fontsize=25)
-    #plt.savefig('C:/Users/Brendan/Desktop/NOAA_Data_Overplot_%i_South.pdf' % (2010+c), bbox_inches = 'tight')
+    plt.savefig('C:/Users/Brendan/Desktop/AR_NOAA_Data_Overplot_%i_South.pdf' % (2010+c), bbox_inches = 'tight')
     #plt.savefig('C:/Users/Brendan/Desktop/NOAA_Data_Overplot_%i_South.jpeg' % (2010+c), bbox_inches = 'tight')
     #plt.close()    
     #"""

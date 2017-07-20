@@ -104,7 +104,7 @@ x_ticks = [40*l for l in range(10)]
 
 
 #for c in range(5):
-for c in range(1,2):
+for c in range(2,3):
     
     yr_ind_start = np.searchsorted(datesD,'%i' % (2010+c))
     yr_ind_end = np.searchsorted(datesD,'%i' % (2010+1+c))
@@ -224,7 +224,7 @@ for c in range(1,2):
     
    
     
-    x00 = 12  # 2011=12, 2012=1
+    x00 = 1.5  # 2011=12, 2012=1.5
     rot_rate = 27.25
     
     for k in range(-1,13):
@@ -248,7 +248,7 @@ for c in range(1,2):
     pN = PatchCollection(patches, cmap=matplotlib.cm.jet, alpha=0.3)
     pS = PatchCollection(patches, cmap=matplotlib.cm.jet, alpha=0.3)
     
-    s = readsav('C:/Users/Brendan/Desktop/AR_Tracking_MSU/2011_sm_euv_str_20170415v9.sav')
+    s = readsav('C:/Users/Brendan/Desktop/AR_Tracking_MSU/2012_sm_euv_str_20170415v9.sav')
 
     smid = s.STRSMEUV.SMID
     ndetection = s.STRSMEUV.NDETECTION
@@ -347,26 +347,19 @@ for c in range(1,2):
     NOAAfrm_overlap = []
   
     
-    #frm_boundsN_H = [30,30,67,45,68,67,78,120,58,67]  # 2012 North (Longer EUV)
-    #frm_boundsN_L = [0,0,0,0,30,40,28,60,0,0]  
-    #long_boundsN_H = [318,220,137,67,210,65,43,308,220,67]  
-    #long_boundsN_L = [296,204,117,43,187,51,18,280,187,43]  
-    #lat_boundsN_H = [23,90,90,90,90,90,26,90,90,90]
-    #lat_boundsN_L = [17,19,0,14,20,0,0,10,19,0]
+    frm_boundsN_H = [30,30,67,45,68,67,78,120,58,67]  # 2012 North (Longer EUV)
+    frm_boundsN_L = [0,0,0,0,30,40,28,60,0,0]  
+    long_boundsN_H = [318,220,137,67,210,65,43,308,220,67]  
+    long_boundsN_L = [296,204,117,43,187,51,18,280,187,43]  
+    lat_boundsN_H = [23,90,90,90,90,90,26,90,90,90]
+    lat_boundsN_L = [17,19,0,14,20,0,0,10,19,0]
     
-    #frm_boundsN_H = [70,98,88,126,179,135,95,140,165]  # 2011 North
-    #frm_boundsN_L = [45,70,55,105,152,100,75,112,145]  
-    #long_boundsN_H = [175,168,103,42,177,290,350,354,340]  
-    #long_boundsN_L = [150,146,75,18,150,255,320,330,327]  
-    #lat_boundsN_H = [30,90,90,26,90,90,90,90,90]
-    #lat_boundsN_L = [15,0,0,0,0,8.5,0,0,0]
-    
-    frm_boundsN_H = [70,98,110,126,180,135,95,140,165,103,140,165]  # 2011 North
-    frm_boundsN_L = [45,70,55,105,143,100,75,112,145,0,12,12]  
-    long_boundsN_H = [175,168,103,42,177,290,350,354,340,191,352,352]  
-    long_boundsN_L = [150,146,87,18,150,255,320,330,327,148,329,327]  
-    lat_boundsN_H = [30,90,90,26,90,90,90,90,90,90,90,90]
-    lat_boundsN_L = [15,0,0,0,0,8.5,0,0,0,0,0,0]
+    #frm_boundsN_H = [70,98,110,126,180,135,95,140,165,103,140,165]  # 2011 North
+    #frm_boundsN_L = [45,70,55,105,143,100,75,112,145,0,12,12]  
+    #long_boundsN_H = [175,168,103,42,177,290,350,354,340,191,352,352]  
+    #long_boundsN_L = [150,146,87,18,150,255,320,330,327,148,329,327]  
+    #lat_boundsN_H = [30,90,90,26,90,90,90,90,90,90,90,90]
+    #lat_boundsN_L = [15,0,0,0,0,8.5,0,0,0,0,0,0]
     
     #frm_boundsN_H = [101,149]  # 2011 South
     #frm_boundsN_L = [40,55]  
@@ -374,6 +367,20 @@ for c in range(1,2):
     #long_boundsN_L = [27,169]  
     #lat_boundsN_H = [0,0]
     #lat_boundsN_L = [-90,-24]
+    
+    #frm_boundsN_H = [47,43,153]  # 2012 South (one doesn't have NOAA - error)
+    #frm_boundsN_L = [0,13,79]  
+    #long_boundsN_H = [111,78,180]  
+    #long_boundsN_L = [79,60,120]  
+    #lat_boundsN_H = [0,0,0]
+    #lat_boundsN_L = [-90,-90,-90]
+    
+    #frm_boundsN_H = [47,153]  # 2012 South
+    #frm_boundsN_L = [0,79]  
+    #long_boundsN_H = [111,180]  
+    #long_boundsN_L = [79,120]  
+    #lat_boundsN_H = [0,0]
+    #lat_boundsN_L = [-90,-90]
     
     #frm_boundsN_H = [20]  
     #frm_boundsN_L = [0]  
@@ -487,6 +494,7 @@ for c in range(1,2):
     ax1 = plt.gca() 
     #ax1 = fig.add_subplot(111,projection='3d')
     ax1.set_title(r'Southern Hemisphere' + '\n Date Range: %s - %s' % (date_start, date_end), y=1.01, fontweight='bold', fontsize=font_size)     
+    #ax1.set_title(r'Northern Hemisphere' + '\n Date Range: %s - %s' % (date_start, date_end), y=1.01, fontweight='bold', fontsize=font_size)     
     ax1.set_ylabel('Longitude', fontsize=font_size)
     ax1.set_xlabel('Day', fontsize=font_size)
     #ax1.set_zlabel('Intensity', fontsize=font_size)
@@ -494,17 +502,16 @@ for c in range(1,2):
     #ax1.set_xlim(0,365)
     ax1.set_ylim(0,360)   
     #ax1.set_ylim(-45,45)
-    #ax1.scatter(frmN_tot, xN_tot,color='blue', label='Our Data') 
-    #ax1.scatter(ARfrm_overlap, ARx_overlap, color='blue', label='Our Data') 
-    #ax1.scatter(ARfrm_overlap, ARy_overlap, color='blue', label='Our Data') 
-    ax1.scatter(frmN_tot, xN_tot, intN_tot, color='blue', label='Our Data')
+    #ax1.scatter(frmS_tot, xS_tot,color='blue', label='Our Data') 
+    ax1.scatter(ARfrm_overlap, ARx_overlap, color='blue', label='Our Data') 
+    #ax1.scatter(frmS_tot, xS_tot, intS_tot, color='blue', label='Our Data')
     #ax1.scatter(datesN, xN,color='orange', label='NOAA Data') 
-    ax1.scatter(datesN, xN, areaN, color='orange', label='NOAA Data') 
-    #ax1.scatter(NOAAfrm_overlap, NOAAx_overlap,color='orange', label='NOAA Data') 
-    ax1.scatter(HMI_doy_totN, HMI_lon_totN, HMI_int_totN, color='red', label='HMI Data')
+    #ax1.scatter(datesS, xS, areaS, color='orange', label='NOAA Data') 
+    ax1.scatter(NOAAfrm_overlap, NOAAx_overlap,color='orange', label='NOAA Data') 
+    #ax1.scatter(HMI_doy_totN, HMI_lon_totN, HMI_int_totN, color='red', label='HMI Data')
     #ax1.scatter(frmN_tot, xN_tot, intN_tot, marker='.', color='blue')   
     #ax1.scatter(xN_tot, yN_tot, intN_tot, marker='.', color='blue')   
-    #ax1.scatter(HMI_doy_totS, HMI_lon_totS, color='red') 
+    ax1.scatter(HMI_doy_totN, HMI_lon_totN, color='red', label='HMI Data') 
     #ax1.scatter(HMI_lon_totN, HMI_lat_totN, HMI_int_totN, marker='.', color='red')       
     ax1.add_collection(pN)
     #plt.xticks(frm_bins, fontsize=tick_size)
@@ -513,7 +520,7 @@ for c in range(1,2):
     ax1.set_xlim(0,180)
     #ax1.set_xlim(0,360)
     #plt.savefig('C:/Users/Brendan/Desktop/NOAA_Ours_HMI_%i_North_trim.jpeg' % (2010+c), bbox_inches = 'tight')
-    #plt.savefig('C:/Users/Brendan/Desktop/NOAA_Ours_HMI_%i_South_full.jpeg' % (2010+c), bbox_inches = 'tight')
+    #plt.savefig('C:/Users/Brendan/Desktop/NOAA_Ours_HMI_%i_South_trim.jpeg' % (2010+c), bbox_inches = 'tight')
     
     """
     ### plot North / South Hemispheres scatter

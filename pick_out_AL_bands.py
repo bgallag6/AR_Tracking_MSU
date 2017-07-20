@@ -139,9 +139,10 @@ for c in range(rot_start,rot_end):
     #plt.figure()
     #plt.scatter(frm_AL,x_AL)    
     
-    AL_array[c] = y6
-    
-    """    
+    #AL_array[c] = y6
+plt.figure()
+plt.scatter(frm_AL_tot, x_AL_tot)
+"""    
     y_lim = 4.
     
     if c == rot_start:
@@ -174,7 +175,9 @@ for c in range(rot_start,rot_end):
         ax1.set_xticklabels([])
         #ax1.bar(x_bins2, y5, width=deg/3)
         ax1.bar(x_bins2, y6, width=deg/3, color='black')
-    """
+"""
+    
+"""
 AL_array[AL_array > 0] = 1.
 AL_array = np.transpose(AL_array)
 
@@ -200,6 +203,7 @@ ax.set_aspect(aspect_shift)
 
 plt.figure()
 plt.scatter(frm_AL_tot, x_AL_tot)
+"""
 
 #plt.savefig('C:/Users/Brendan/Desktop/3x_Car_Rot_South_2_3.pdf', bbox_inches = 'tight')
 #plt.savefig('C:/Users/Brendan/Desktop/3x_Car_Rot_South_3plus_30deg_car.jpeg', bbox_inches = 'tight')
