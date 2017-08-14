@@ -96,7 +96,7 @@ x_bins = [20*l for l in range(19)]
 x_ticks = [40*l for l in range(10)]
 
 
-for c in range(5):
+for c in range(1):
 #for c in range(3):
     
     yr_ind_start = np.searchsorted(datesD,'%i' % (2010+c))
@@ -218,7 +218,7 @@ for c in range(5):
     plt.xticks(frm_bins, fontsize=tick_size)
     plt.yticks(long_bins, fontsize=tick_size)
     plt.legend(fontsize=25)
-    plt.savefig('C:/Users/Brendan/Desktop/AR_NOAA_Data_Overplot_%i_North.pdf' % (2010+c), bbox_inches = 'tight')
+    #plt.savefig('C:/Users/Brendan/Desktop/AR_NOAA_Data_Overplot_%i_North.pdf' % (2010+c), bbox_inches = 'tight')
     #plt.savefig('C:/Users/Brendan/Desktop/NOAA_Data_Overplot_%i_North.jpeg' % (2010+c), bbox_inches = 'tight')
     #plt.close()
     
@@ -236,7 +236,7 @@ for c in range(5):
     plt.xticks(frm_bins,fontsize=tick_size)
     plt.yticks(long_bins, fontsize=tick_size)
     plt.legend(fontsize=25)
-    plt.savefig('C:/Users/Brendan/Desktop/AR_NOAA_Data_Overplot_%i_South.pdf' % (2010+c), bbox_inches = 'tight')
+    #plt.savefig('C:/Users/Brendan/Desktop/AR_NOAA_Data_Overplot_%i_South.pdf' % (2010+c), bbox_inches = 'tight')
     #plt.savefig('C:/Users/Brendan/Desktop/NOAA_Data_Overplot_%i_South.jpeg' % (2010+c), bbox_inches = 'tight')
     #plt.close()    
     #"""

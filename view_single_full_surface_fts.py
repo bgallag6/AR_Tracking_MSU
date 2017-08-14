@@ -11,7 +11,7 @@ import astropy.units as u
 import sunpy
 from sunpy.map import Map
   
-x = sunpy.map.Map('C:/Users/Brendan/Downloads/20130704_001615_304.fts')
+x = sunpy.map.Map('C:/Users/Brendan/Downloads/20110310_120615_304.fts')
 #x = sunpy.map.Map('C:/Users/Brendan/Documents/Python Scripts/test_download2.fts')
 x2 = x.data
 

@@ -137,33 +137,39 @@ yS_max = np.percentile(yS_tot, 99)
 plt.rcParams["font.family"] = "Times New Roman"
 font_size = 23
 
+xmax = np.max([intN_max,intS_max])
+
 fig = plt.figure(figsize=(22,10))
 ax1 = plt.subplot2grid((1,11),(0,0), colspan=5, rowspan=1)
 ax1 = plt.gca()
-plt.suptitle('Total Active Region Intensity', y=0.97, fontsize=font_size)
+plt.suptitle('Total EUV Active Region Integrated Intensity', y=0.97, fontsize=font_size)
 ax1.set_title('Northern Hemisphere', y=1.01, fontsize=font_size)
 ax1.set_ylabel('Bin Count', fontsize=font_size)
 ax1.set_xlabel('Intensity', fontsize=font_size)
+ax1.vlines(30,0,4000,linestyle='dashed',linewidth=3.,label='Threshold > 30')
 #y, x, _ = ax1.hist(intN_tot, bins=50, visible=False) 
 #max_bin = int(x[-1])
 #ax1.hist(intN_tot, bins=max_bin/10, color='blue')
 #ax1.set_xlim(0,max_bin) 
-ax1.hist(intN_tot, bins=50, range=(intN_min, intN_max))
-ax1.set_xlim(0,intN_max) 
+ax1.hist(intN_tot, bins=50, range=(0, xmax))
+ax1.set_xlim(0,xmax) 
+plt.legend(fontsize=font_size)
 
 ax2 = plt.subplot2grid((1,11),(0,6), colspan=5, rowspan=1)
 ax2 = plt.gca()
 ax2.set_title('Southern Hemisphere', y=1.01, fontsize=font_size)
 ax2.set_ylabel('Bin Count', fontsize=font_size)
 ax2.set_xlabel('Intensity', fontsize=font_size)
+ax2.vlines(30,0,4000,linestyle='dashed',linewidth=3.,label='Threshold > 30')
 #y, x, _ = ax2.hist(intS_tot, bins=50, visible=False) 
 #max_bin = int(x[-1])
 #ax2.hist(intS_tot, bins=max_bin/10, color='blue')
 #ax2.set_xlim(0,max_bin) 
-ax2.hist(intS_tot, bins=50, range=(intS_min, intS_max))
-ax2.set_xlim(0,intS_max) 
+ax2.hist(intS_tot, bins=50, range=(0, xmax))
+ax2.set_xlim(0,xmax) 
+plt.legend(fontsize=font_size)
 
-plt.savefig('C:/Users/Brendan/Desktop/Total_Intensity_Histogram.pdf')
+#plt.savefig('C:/Users/Brendan/Desktop/Total_Intensity_Histogram_Threshold.pdf', bbox_inches='tight')
 
 
 fig = plt.figure(figsize=(22,10))
@@ -194,7 +200,16 @@ ax2.set_xlabel('Area', fontsize=font_size)
 ax2.hist(areaS_tot, bins=50, range=(areaS_min, areaS_max))
 ax2.set_xlim(0,areaS_max) 
 
-plt.savefig('C:/Users/Brendan/Desktop/Total_Area_Histogram.pdf')
+#plt.savefig('C:/Users/Brendan/Desktop/Total_Area_Histogram.pdf')
+
+lonN_sum = np.sum(xN_tot)
+lonS_sum = np.sum(xS_tot)
+lonN_thresh = xN_tot[xN_tot < 30]
+lonS_thresh = xS_tot[xS_tot < 30]
+lonN_thresh_sum = np.sum(lonN_thresh)
+lonS_thresh_sum = np.sum(lonS_thresh)
+lonN_percent = lonN_thresh_sum / lonN_sum
+lonS_percent = lonS_thresh_sum / lonS_sum
 
 
 fig = plt.figure(figsize=(22,10))
@@ -209,8 +224,11 @@ ax1.set_xlabel('Box Width', fontsize=font_size)
 #max_bin = int(x[-1])
 #ax1.hist(xN_tot, bins=50, color='blue')
 #ax1.set_xlim(0,max_bin) 
+ax1.vlines(30,0,2250, linestyle='dashed', linewidth=2., label='30-Degree Bin')
+ax1.set_ylim(0,2250)
 ax1.hist(xN_tot, bins=50, range=(xN_min, xN_max))
 ax1.set_xlim(0,xN_max) 
+ax1.text(33, 2000, '%i%s Below' % (lonN_percent*100, '%'), fontsize=font_size)
 
 ax2 = plt.subplot2grid((1,11),(0,6), colspan=5, rowspan=1)
 ax2 = plt.gca()
@@ -222,11 +240,23 @@ ax2.set_xlabel('Box Width', fontsize=font_size)
 #max_bin = int(x[-1])
 #ax2.hist(xS_tot, bins=50, color='blue')
 #ax2.set_xlim(0,max_bin) 
+ax2.vlines(30,0,2250, linestyle='dashed', linewidth=2., label='30-Degree Bin')
+ax2.set_ylim(0,2250)
 ax2.hist(xS_tot, bins=50, range=(xS_min, xS_max))
 ax2.set_xlim(0,xS_max) 
+ax2.text(33, 2000, '%i%s Below' % (lonS_percent*100, '%'), fontsize=font_size)
 
-plt.savefig('C:/Users/Brendan/Desktop/Total_Width_Histogram.pdf')
+#plt.savefig('C:/Users/Brendan/Desktop/Total_Width_Histogram_Thresh.jpeg', bbox_inches='tight')
 
+
+latN_sum = np.sum(yN_tot)
+latS_sum = np.sum(yS_tot)
+latN_thresh = yN_tot[yN_tot < 30]
+latS_thresh = yS_tot[yS_tot < 30]
+latN_thresh_sum = np.sum(latN_thresh)
+latS_thresh_sum = np.sum(latS_thresh)
+latN_percent = latN_thresh_sum / latN_sum
+latS_percent = latS_thresh_sum / latS_sum
 
 fig = plt.figure(figsize=(22,10))
 ax1 = plt.subplot2grid((1,11),(0,0), colspan=5, rowspan=1)
@@ -256,7 +286,7 @@ ax2.set_xlabel('Box Height', fontsize=font_size)
 ax2.hist(yS_tot, bins=50, range=(yS_min, yS_max))
 ax2.set_xlim(0,yS_max) 
 
-plt.savefig('C:/Users/Brendan/Desktop/Total_Height_Histogram.pdf')
+#plt.savefig('C:/Users/Brendan/Desktop/Total_Height_Histogram.pdf')
 
 
 """   

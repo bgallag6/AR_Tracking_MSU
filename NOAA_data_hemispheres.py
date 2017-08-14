@@ -41,7 +41,7 @@ count = 0
 
 year0 = 2010
 
-with open('C:/Users/Brendan/Desktop/Week3/NOAA AR/%i_NOAA_AR.csv' % year0, 'rb') as csvfile:
+with open('C:/Users/Brendan/Desktop/MSU_Project/Week3/NOAA AR/%i_NOAA_AR.csv' % year0, 'rb') as csvfile:
      spamreader = csv.reader(csvfile, delimiter=',', quotechar='|')
      
      for row in spamreader:
