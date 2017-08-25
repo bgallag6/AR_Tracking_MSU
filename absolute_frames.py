@@ -33,9 +33,9 @@ font_size = 23
 fmt = '%Y%m%d%H'
 
 s = readsav('fits_strs_20161219v7.sav')
-dates = np.load('C:/Users/Brendan/Desktop/MSU_Project/Active_Longitude/image_jul_dates.npy')
+dates = np.load('C:/Users/Brendan/Desktop/Files/MSU_Project/Active_Longitude/image_jul_dates.npy')
 dates = np.array(dates)
-f_names = np.load('C:/Users/Brendan/Desktop/MSU_Project/Active_Longitude/ar_filenames.npy')
+f_names = np.load('C:/Users/Brendan/Desktop/Files/MSU_Project/Active_Longitude/ar_filenames.npy')
 datesARs = []
 greg_date = []
 for i in range(len(f_names)):
@@ -79,7 +79,7 @@ all_scaled_intensity = (np.array(all_tot_int1)/np.array(all_med_inten)[:, np.new
 
 arr_total = np.zeros((trim_end-trim_start,4,50))
 
-int_thresh = 30
+int_thresh = 0
 
 for k in range(trim_start, trim_end):
     numAR = n_regions[k]
@@ -93,7 +93,10 @@ for k in range(trim_start, trim_end):
     arr_total[k-trim_start,1,:len(xtemp)] = ytemp
     arr_total[k-trim_start,2,:len(xtemp)] = inttemp
     arr_total[k-trim_start,3,:len(xtemp)] = [datesARs0[k] for j in range(len(inttemp))]
+ 
+tot_AR = np.sum(n_regions[trim_start:trim_end])
+print tot_AR
 
-np.save('C:/Users/Brendan/Desktop/EUV_Absolute_ARs.npy', arr_total)
-np.save('C:/Users/Brendan/Desktop/EUV_Absolute_Dates.npy', dates_final)
+#np.save('C:/Users/Brendan/Desktop/Inbox/EUV_Absolute_ARs_0thresh.npy', arr_total)
+#np.save('C:/Users/Brendan/Desktop/Inbox/EUV_Absolute_Dates_0thresh.npy', dates_final)
 

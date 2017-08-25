@@ -158,7 +158,7 @@ for c in range(int(seg)):
         ax1.scatter(frmS_tot, xS_tot) 
         ax2.hist(xS_tot)
     
-    plt.savefig('C:/Users/Brendan/Desktop/absolute/%s/Car_Rot_%i_%i_%s_%ix%iysmooth.jpg' % (hemiF,(c*rotations)+1, ((c+1)*rotations),hemiF, smooth_x,smooth_y), bbox_inches = 'tight')
+    plt.savefig('C:/Users/Brendan/Desktop/Inbox/AL/absolute/%s/Car_Rot_%i_%i_%s_%ix%iysmooth.jpg' % (hemiF,(c*rotations)+1, ((c+1)*rotations),hemiF, smooth_x,smooth_y), bbox_inches = 'tight')
     plt.close()
 
     pad = 18
@@ -235,7 +235,7 @@ for c in range(int(seg)):
     ax2.set_ylim(420,-60)
     ax2.set_aspect(0.5)
     
-    plt.savefig('C:/Users/Brendan/Desktop/absolute/%s/%s_contours_%i_%ix%iysmooth.jpeg' % (hemiF, hemiF, c, smooth_x, smooth_y), bbox_inches='tight')
+    plt.savefig('C:/Users/Brendan/Desktop/Inbox/AL/absolute/%s/%s_contours_%i_%ix%iysmooth.jpeg' % (hemiF, hemiF, c, smooth_x, smooth_y), bbox_inches='tight')
     plt.close()       
        
     level0 = CS.levels[0]
@@ -369,7 +369,7 @@ for c in range(int(seg)):
        ax2.plot(framesC, m*framesC + b, 'r-')   
 
     #"""
-    plt.savefig('C:/Users/Brendan/Desktop/absolute/%s/%s_AR_Bands_Compare_%i_%ix%iysmooth.jpeg' % (hemiF, hemiF, c,smooth_x,smooth_y))
+    plt.savefig('C:/Users/Brendan/Desktop/Inbox/AL/absolute/%s/%s_AR_Bands_Compare_%i_%ix%iysmooth.jpeg' % (hemiF, hemiF, c,smooth_x,smooth_y))
     plt.close()    
      
     print (len(paths) - count) 
@@ -377,9 +377,9 @@ for c in range(int(seg)):
     
     num_bands[c] = (len(paths) - count)
 
-np.save('C:/Users/Brendan/Desktop/AR_Absolute_bands_%s_3x_%ix%iysmooth.npy' % (hemi,smooth_x,smooth_y), AR_total)
-np.save('C:/Users/Brendan/Desktop/AR_Absolute_num_bands_%s_3x_%ix%iysmooth.npy' % (hemi,smooth_x,smooth_y), num_bands)
-np.save('C:/Users/Brendan/Desktop/AR_Absolute_slopes_%s_3x_%ix%iysmooth.npy' % (hemi,smooth_x,smooth_y), fit_params)
+np.save('C:/Users/Brendan/Desktop/Inbox/AL/AR_Absolute_bands_%s_3x_%ix%iysmooth.npy' % (hemi,smooth_x,smooth_y), AR_total)
+np.save('C:/Users/Brendan/Desktop/Inbox/AL/AR_Absolute_num_bands_%s_3x_%ix%iysmooth.npy' % (hemi,smooth_x,smooth_y), num_bands)
+np.save('C:/Users/Brendan/Desktop/Inbox/AL/AR_Absolute_slopes_%s_3x_%ix%iysmooth.npy' % (hemi,smooth_x,smooth_y), fit_params)
 
 """
     num_bins = 36 

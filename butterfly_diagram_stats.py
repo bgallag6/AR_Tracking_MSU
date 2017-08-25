@@ -58,9 +58,9 @@ for k in range(143):
 """
 
 s0 = readsav('fits_strs_20161219v7.sav')
-dates = np.load('C:/Users/Brendan/Desktop/MSU_Project/Active_Longitude/image_jul_dates.npy')
+dates = np.load('C:/Users/Brendan/Desktop/Files/MSU_Project/Active_Longitude/image_jul_dates.npy')
 dates = np.array(dates)
-f_names = np.load('C:/Users/Brendan/Desktop/MSU_Project/Active_Longitude/ar_filenames.npy')
+f_names = np.load('C:/Users/Brendan/Desktop/Files/MSU_Project/Active_Longitude/ar_filenames.npy')
 
 #trim = 2922  # image before jump 20140818-20151103
 trim = 2872  # last index for end of Carrington rotation
@@ -120,7 +120,7 @@ for i in range(11,trim):  # off slightly, not all frames are represented?
     plt.scatter(frmS_temp, yS_temp,color='red')
     
 
-arr = np.load('C:/Users/Brendan/Desktop/1874_2016_NOAA_SRS_DATA.npy')
+arr = np.load('C:/Users/Brendan/Desktop/Files/1874_2016_NOAA_SRS_DATA.npy')
 
 lat = arr[:,7]
 latN = lat[lat > 0]
