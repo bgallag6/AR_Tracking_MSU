@@ -22,10 +22,10 @@ font_size = 23
     
 #deg = 10
 #deg0 = [10,15,20,30]
-deg0 = [30]
+deg0 = [20]
 
-hemi = 'N'
-#hemi = 'S'
+#hemi = 'N'
+hemi = 'S'
 smooth_x = 6  #  5, 6, 8, 10
 smooth_y = 3  #  2, 3, 4, 5
 
@@ -38,13 +38,17 @@ elif hemi == 'S':
     hemiF = 'South'
    
 #num_bands = np.load('C:/Users/Brendan/Desktop/MSU_Project/num_bands_S.npy')
-#num_bands = np.load('C:/Users/Brendan/Desktop/MSU_Project/AL_smoothing/num_bands_%s_3x_30int_%sx%sysmooth.npy' % (hemi, smooth_x, smooth_y))
-num_bands = np.load('C:/Users/Brendan/Desktop/NOAA_absolute/NOAA_Absolute_num_bands_%s_3x_%sx%sysmooth.npy' % (hemi, smooth_x, smooth_y))
+#num_bands = np.load('C:/Users/Brendan/Desktop/Files/MSU_Project/8_3/MSU_Project/AL_smoothing/num_bands_%s_3x_30int_%sx%sysmooth.npy' % (hemi, smooth_x, smooth_y))
+num_bands = np.load('C:/Users/Brendan/Desktop/Inbox/AL/absolute/%s/AR_Absolute_num_bands_%s_3x_%sx%sysmooth.npy' % (hemiF, hemi, smooth_x, smooth_y))
+#num_bands = np.load('C:/Users/Brendan/Desktop/NOAA_absolute/NOAA_Absolute_num_bands_%s_3x_%sx%sysmooth.npy' % (hemi, smooth_x, smooth_y))
+#num_bands = np.load('C:/Users/Brendan/Desktop/Files/MSU_Project/8_3/NOAA_absolute/NOAA_Absolute_num_bands_%s_3x_%sx%sysmooth.npy' % (hemi, smooth_x, smooth_y))
 #num_bands = num_bands
     
 #ARs = np.load('C:/Users/Brendan/Desktop/MSU_Project/AR_bands_S.npy')
 #ARs = np.load('C:/Users/Brendan/Desktop/MSU_Project/AL_smoothing/AR_bands_%s_3x_30int_%sx%sysmooth.npy' % (hemi, smooth_x, smooth_y))
-ARs = np.load('C:/Users/Brendan/Desktop/NOAA_absolute/NOAA_Absolute_bands_%s_3x_%sx%sysmooth.npy' % (hemi, smooth_x, smooth_y))
+ARs = np.load('C:/Users/Brendan/Desktop/Inbox/AL/absolute/%s/AR_Absolute_bands_%s_3x_%sx%sysmooth.npy' % (hemiF, hemi, smooth_x, smooth_y))
+#ARs = np.load('C:/Users/Brendan/Desktop/NOAA_absolute/NOAA_Absolute_bands_%s_3x_%sx%sysmooth.npy' % (hemi, smooth_x, smooth_y))
+#ARs = np.load('C:/Users/Brendan/Desktop/Files/MSU_Project/8_3/NOAA_absolute/NOAA_Absolute_bands_%s_3x_%sx%sysmooth.npy' % (hemi, smooth_x, smooth_y))
 #ARs = AR_total
 
 for i in range(1000):
@@ -129,8 +133,9 @@ for k in range(len(deg0)):
         
         AL_array[c] = y4
         
-        #y7 = np.append(y6,y6)
-        y7 = np.append(y4,y4)
+        y7 = np.append(y6,y6)
+        #y7 = np.append(y4,y4)
+        #y7 = np.append(y3,y3)
             
         y_lim = 4.
         
@@ -166,8 +171,8 @@ for k in range(len(deg0)):
         #ax1.bar(x_bins2, y5, width=deg/3)
         #ax1.bar(x_bins2, y6, width=deg/3, color='black')
         ax1.bar(x_bins4, y7, width=deg/3, color='black')
-    plt.savefig('C:/Users/Brendan/Desktop/3x_Car_Rot_South_%ideg_30int_%ix%iy_old_stddev.jpeg' % (deg,smooth_x,smooth_y), bbox_inches = 'tight')
-    #plt.savefig('C:/Users/Brendan/Desktop/3x_Car_Rot_North_full_%ideg_30int_%ix%iy.jpeg' % (deg,smooth_x,smooth_y), bbox_inches = 'tight')
+    #plt.savefig('C:/Users/Brendan/Desktop/3x_Car_Rot_South_%ideg_30int_%ix%iy_old_stddev.jpeg' % (deg,smooth_x,smooth_y), bbox_inches = 'tight')
+    #plt.savefig('C:/Users/Brendan/Desktop/Inbox/AL/3x_Car_Rot_%s_full_%ideg_30int_%ix%iy_0thresh.jpeg' % (hemiF, deg,smooth_x,smooth_y), bbox_inches = 'tight')
     
     AL_array[AL_array > 0] = 1.
     AL_array = np.transpose(AL_array)

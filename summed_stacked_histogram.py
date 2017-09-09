@@ -39,12 +39,13 @@ elif hemi == 'S':
    
 #num_bands = np.load('C:/Users/Brendan/Desktop/MSU_Project/num_bands_S.npy')
 #num_bands = np.load('C:/Users/Brendan/Desktop/MSU_Project/AL_smoothing/num_bands_%s_3x_30int_%sx%sysmooth.npy' % (hemi, smooth_x, smooth_y))
-num_bands = np.load('C:/Users/Brendan/Desktop/MSU_Project/8_3/NOAA_absolute/NOAA_Absolute_num_bands_%s_3x_%sx%sysmooth.npy' % (hemi, smooth_x, smooth_y))
+#num_bands = np.load('C:/Users/Brendan/Desktop/MSU_Project/8_3/NOAA_absolute/NOAA_Absolute_num_bands_%s_3x_%sx%sysmooth.npy' % (hemi, smooth_x, smooth_y))
+num_bands = np.load('C:/Users/Brendan/Desktop/Files/MSU_Project/8_3/NOAA_absolute/NOAA_Absolute_num_bands_%s_3x_%sx%sysmooth.npy' % (hemi, smooth_x, smooth_y))
 #num_bands = num_bands
     
 #ARs = np.load('C:/Users/Brendan/Desktop/MSU_Project/AR_bands_S.npy')
 #ARs = np.load('C:/Users/Brendan/Desktop/MSU_Project/AL_smoothing/AR_bands_%s_3x_30int_%sx%sysmooth.npy' % (hemi, smooth_x, smooth_y))
-ARs = np.load('C:/Users/Brendan/Desktop/MSU_Project/8_3/NOAA_absolute/NOAA_Absolute_bands_%s_3x_%sx%sysmooth.npy' % (hemi, smooth_x, smooth_y))
+ARs = np.load('C:/Users/Brendan/Desktop/Files/MSU_Project/8_3/NOAA_absolute/NOAA_Absolute_bands_%s_3x_%sx%sysmooth.npy' % (hemi, smooth_x, smooth_y))
 #ARs = AR_total
 
 

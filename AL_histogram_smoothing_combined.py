@@ -21,7 +21,7 @@ plt.rcParams["font.family"] = "Times New Roman"
 font_size = 23
     
 #deg = 10
-#deg0 = [20]
+#deg0 = [10]
 deg0 = [10,15,20,30]
 
 #hemi = 'N'
@@ -47,15 +47,15 @@ elif hemi == 'S':
 #ARs8 = np.load('C:/Users/Brendan/Desktop/AL_smoothing/AR_bands_%s_3x_30int_%sx%sysmooth.npy' % (hemi, 8, 4))
 #ARs10 = np.load('C:/Users/Brendan/Desktop/AL_smoothing/AR_bands_%s_3x_30int_%sx%sysmooth.npy' % (hemi, 10, 5))
 
-num_bands5 =  np.load('C:/Users/Brendan/Desktop/absolute/%s/AR_Absolute_num_bands_%s_3x_%sx%sysmooth.npy' % (hemiF, hemi, 5, 2))
-num_bands6 =  np.load('C:/Users/Brendan/Desktop/absolute/%s/AR_Absolute_num_bands_%s_3x_%sx%sysmooth.npy' % (hemiF, hemi, 6, 3))
-num_bands7 =  np.load('C:/Users/Brendan/Desktop/absolute/%s/AR_Absolute_num_bands_%s_3x_%sx%sysmooth.npy' % (hemiF, hemi, 7, 4))
-num_bands8 =  np.load('C:/Users/Brendan/Desktop/absolute/%s/AR_Absolute_num_bands_%s_3x_%sx%sysmooth.npy' % (hemiF, hemi, 8, 5))
+num_bands5 =  np.load('C:/Users/Brendan/Desktop/Inbox/AL/absolute/%s/AR_Absolute_num_bands_%s_3x_%sx%sysmooth.npy' % (hemiF, hemi, 5, 2))
+num_bands6 =  np.load('C:/Users/Brendan/Desktop/Inbox/AL/absolute/%s/AR_Absolute_num_bands_%s_3x_%sx%sysmooth.npy' % (hemiF, hemi, 6, 3))
+num_bands7 =  np.load('C:/Users/Brendan/Desktop/Inbox/AL/absolute/%s/AR_Absolute_num_bands_%s_3x_%sx%sysmooth.npy' % (hemiF, hemi, 8, 4))
+num_bands8 =  np.load('C:/Users/Brendan/Desktop/Inbox/AL/absolute/%s/AR_Absolute_num_bands_%s_3x_%sx%sysmooth.npy' % (hemiF, hemi, 10, 5))
     
-ARs5 = np.load('C:/Users/Brendan/Desktop/absolute/%s/AR_Absolute_bands_%s_3x_%sx%sysmooth.npy' % (hemiF, hemi, 5, 2))
-ARs6 = np.load('C:/Users/Brendan/Desktop/absolute/%s/AR_Absolute_bands_%s_3x_%sx%sysmooth.npy' % (hemiF, hemi, 6, 3))
-ARs7 = np.load('C:/Users/Brendan/Desktop/absolute/%s/AR_Absolute_bands_%s_3x_%sx%sysmooth.npy' % (hemiF, hemi, 7, 4))
-ARs8 = np.load('C:/Users/Brendan/Desktop/absolute/%s/AR_Absolute_bands_%s_3x_%sx%sysmooth.npy' % (hemiF, hemi, 8, 5))
+ARs5 = np.load('C:/Users/Brendan/Desktop/Inbox/AL/absolute/%s/AR_Absolute_bands_%s_3x_%sx%sysmooth.npy' % (hemiF, hemi, 5, 2))
+ARs6 = np.load('C:/Users/Brendan/Desktop/Inbox/AL/absolute/%s/AR_Absolute_bands_%s_3x_%sx%sysmooth.npy' % (hemiF, hemi, 6, 3))
+ARs7 = np.load('C:/Users/Brendan/Desktop/Inbox/AL/absolute/%s/AR_Absolute_bands_%s_3x_%sx%sysmooth.npy' % (hemiF, hemi, 8, 4))
+ARs8 = np.load('C:/Users/Brendan/Desktop/Inbox/AL/absolute/%s/AR_Absolute_bands_%s_3x_%sx%sysmooth.npy' % (hemiF, hemi, 10, 5))
 
 ARs_arr = [ARs5, ARs6, ARs7, ARs8]
 num_bands_arr = [num_bands5, num_bands6, num_bands7, num_bands8]
@@ -73,7 +73,7 @@ for n in range(4):
     ARs = ARs_arr[n]
     num_bands = num_bands_arr[n]
 
-    for i in range(500):
+    for i in range(1000):
         if ARs[i,0,0] == 0:
             count = i
             break
@@ -150,8 +150,8 @@ for n in range(4):
             #    if u != max2:
             #        norm2[u] = 0
                
-            #y3 = y1/(np.std(y1))
-            y3 = (y1-np.mean(y1))/(np.std(y1))
+            y3 = y1/(np.std(y1))
+            #y3 = (y1-np.mean(y1))/(np.std(y1))
             y4 = [0 if x < 2. else x for x in y3]
             y5 = [0 if x >= 3. else x for x in y4]
             y6 = [0 if x < 3. else x for x in y4]
@@ -169,10 +169,13 @@ for n in range(4):
                     AL_combined[c,(h3*nbins)+h4] += y3[h3]
                     
             for l1 in range(num_bins):
+            #for l1 in range(nbins):
                 if x_avg > l1*deg and x_avg < (l1+1)*deg:
                     #x_scaled[l1] += int_tot[r]
                     x_scaled[l1] += (x_count / int_avg)
                     #x_scaled[l1] += 1
+                    
+            #AL_combined[c] = x_scaled  # added 8_25
                     
 #np.save('C:/Users/Brendan/Desktop/3x_%s_3sigma_combined_absolute.npy' % hemiF, AL_combined)
 #"""
@@ -242,12 +245,12 @@ for h1 in range(18):
     #y0 = [0 if x < 6. else x for x in yrow]
     #y8 = [0 if x >= 9. else x for x in y0]
     #y9 = [0 if x < 9. else x for x in y0]
-    #y0 = [0 if x < 24. else x for x in yrow]   
-    #y8 = [0 if x >= 36. else x for x in y0]
-    #y9 = [0 if x < 36. else x for x in y0]
-    y0 = [0 if x < 12. else x for x in yrow]   
-    y8 = [0 if x >= 24. else x for x in y0]
-    y9 = [0 if x < 24. else x for x in y0]
+    y0 = [0 if x < 30. else x for x in yrow]   
+    y8 = [0 if x >= 40. else x for x in y0]
+    y9 = [0 if x < 40. else x for x in y0]
+    #y0 = [0 if x < 12. else x for x in yrow]   
+    #y8 = [0 if x >= 24. else x for x in y0]
+    #y9 = [0 if x < 24. else x for x in y0]
     
     y00 = np.append(AL_combined[h1,:], AL_combined[h1,:])
     y88 = np.append(y8,y8)
@@ -278,4 +281,4 @@ for h1 in range(18):
     #ax1.bar(xbins72, y88, width=10, color='black')
     #ax1.bar(xbins72, y99, width=10, color='red')
 
-#plt.savefig('C:/Users/Brendan/Desktop/3x_Car_Rot_%s_combined_hist_full.jpeg' % hemi, bbox_inches = 'tight')
+plt.savefig('C:/Users/Brendan/Desktop/Inbox/AL/3x_Car_Rot_%s_combined_hist_full_per_point_0thresh.jpeg' % hemi, bbox_inches = 'tight')

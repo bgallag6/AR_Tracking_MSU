@@ -58,17 +58,18 @@ for w1 in range(4):
         #print smooth_x, smooth_y, AL_thresh     
            
         #num_bands = np.load('C:/Users/Brendan/Desktop/MSU_Project/num_bands_S.npy')
-        num_bands = np.load('C:/Users/Brendan/Desktop/MSU_Project/8_3/absolute/%s/AR_Absolute_num_bands_%s_3x_%sx%sysmooth.npy' % (hemiF, hemi, smooth_x, smooth_y))
+        #num_bands = np.load('C:/Users/Brendan/Desktop/MSU_Project/8_3/absolute/%s/AR_Absolute_num_bands_%s_3x_%sx%sysmooth.npy' % (hemiF, hemi, smooth_x, smooth_y))
+        num_bands = np.load('C:/Users/Brendan/Desktop/Inbox/AL/absolute/%s/AR_Absolute_num_bands_%s_3x_%sx%sysmooth.npy' % (hemiF, hemi, smooth_x, smooth_y))
         #num_bands = num_bands
             
         #ARs = np.load('C:/Users/Brendan/Desktop/MSU_Project/AR_bands_S.npy')
-        ARs = np.load('C:/Users/Brendan/Desktop/MSU_Project/8_3/absolute/%s/AR_Absolute_bands_%s_3x_%sx%sysmooth.npy' % (hemiF, hemi, smooth_x, smooth_y))
+        ARs = np.load('C:/Users/Brendan/Desktop/Inbox/AL/absolute/%s/AR_Absolute_bands_%s_3x_%sx%sysmooth.npy' % (hemiF, hemi, smooth_x, smooth_y))
         #ARs = AR_total
         
         #fit_params = np.load('C:/Users/Brendan/Desktop/MSU_Project/AR_bands_S_slopes.npy')
-        fit_params = np.load('C:/Users/Brendan/Desktop/MSU_Project/8_3/absolute/%s/AR_Absolute_slopes_%s_3x_%sx%sysmooth.npy' % (hemiF, hemi, smooth_x, smooth_y))
+        fit_params = np.load('C:/Users/Brendan/Desktop/Inbox/AL/absolute/%s/AR_Absolute_slopes_%s_3x_%sx%sysmooth.npy' % (hemiF, hemi, smooth_x, smooth_y))
         
-        AL_bins = np.load('C:/Users/Brendan/Desktop/MSU_Project/8_3/absolute/%s/3x_%s_3sigma_combined_absolute.npy' % (hemiF,hemiF))
+        AL_bins = np.load('C:/Users/Brendan/Desktop/Inbox/AL/absolute/%s/3x_%s_3sigma_combined_absolute.npy' % (hemiF,hemiF))
         
         for i in range(1000):
             if ARs[i,0,0] == 0:
