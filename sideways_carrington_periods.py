@@ -20,9 +20,9 @@ import jdcal
 
 #"""
 s = readsav('fits_strs_20161219v7.sav')
-dates = np.load('C:/Users/Brendan/Desktop/MSU_Project/Active_Longitude/image_jul_dates.npy')
+dates = np.load('C:/Users/Brendan/Desktop/Files/MSU_Project/Active_Longitude/image_jul_dates.npy')
 dates = np.array(dates)
-f_names = np.load('C:/Users/Brendan/Desktop/MSU_Project/Active_Longitude/ar_filenames.npy')
+f_names = np.load('C:/Users/Brendan/Desktop/Files/MSU_Project/Active_Longitude/ar_filenames.npy')
 
 #trim = 2922  # image before jump 20140818-20151103
 trim = 2872  # last index for end of Carrington rotation
@@ -169,7 +169,7 @@ for c in range(int(seg)):
     ax2.hist(xN_tot, bins=x_bins) 
     plt.xticks(x_ticks)
     #plt.savefig('C:/Users/Brendan/Desktop/Car_Rot_%i_%i_North.jpg' % ((c*rotations)+1, ((c+1)*rotations)), bbox_inches = 'tight')
-    plt.close()
+    #plt.close()
     
     fig = plt.figure(figsize=(22,10))
     plt.suptitle(r'Southern Hemisphere - Carrington Rotation Periods: %i - %i' % ((c*rotations)+1, ((c+1)*rotations)) + '\n Date Range: %s - %s' % (date_start, date_end), y=0.97, fontweight='bold', fontsize=font_size)

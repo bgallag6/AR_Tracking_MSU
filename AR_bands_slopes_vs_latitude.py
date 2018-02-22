@@ -15,15 +15,19 @@ from scipy.stats.stats import pearsonr
 #ARs = np.load('C:/Users/Brendan/Desktop/AR_bands_S_1x_Rot.npy')
 #fit_paramsS = np.load('C:/Users/Brendan/Desktop/MSU_Project/AR_bands_S_slopes.npy')
 #ARsS = np.load('C:/Users/Brendan/Desktop/MSU_Project/AR_bands_S_lat.npy')
-fit_paramsS = fit_params
-ARsS = AR_total
+fit_paramsS = np.load('C:/Users/Brendan/Desktop/Inbox/AL/absolute_24thresh_revised/South/AR_Absolute_slopes_S_3x_6x3ysmooth.npy')
+ARsS = np.load('C:/Users/Brendan/Desktop/Inbox/AL/absolute_24thresh_revised/South/AR_Absolute_bands_S_3x_6x3ysmooth.npy')
+#fit_paramsS = np.load('C:/Users/Brendan/Desktop/Inbox/AL/absolute_24thresh_revised/North/AR_Absolute_slopes_N_3x_6x3ysmooth.npy')
+#ARsS = np.load('C:/Users/Brendan/Desktop/Inbox/AL/absolute_24thresh_revised/North/AR_Absolute_bands_N_3x_6x3ysmooth.npy')
+#fit_paramsS = fit_params
+#ARsS = AR_total
 
 count = 0
 #for i in range(500):
 #for i in range(1000):
 for i in range(3000):
-    #if ARsS[i,2,0] == 0.:
-    if ARsS[i,1,0] == 0.:  #NOAA
+    if ARsS[i,2,0] == 0.:
+    #if ARsS[i,1,0] == 0.:  #NOAA
         count = i
         break
     
@@ -47,8 +51,8 @@ m, b = np.polyfit(med_lat, slopes, 1)
 med_lat_sin2 = np.sin(np.deg2rad(med_lat))**2
 #med_lat_sin2 = np.rad2deg(np.sin(np.deg2rad(med_lat)))
 
-#slopes_days = slopes*2  # older
-slopes_days = slopes  # for absolute
+slopes_days = slopes*2  # older
+#slopes_days = slopes  # for absolute
 
 m2, b2 = np.polyfit(med_lat_sin2, slopes_days, 1)
 
@@ -88,18 +92,26 @@ plt.text(0.20,0.75,'y = %0.2fx + %0.2f' % (m2, b2), fontsize=font_size)
 
 
 """
-fit_paramsN = np.load('C:/Users/Brendan/Desktop/MSU_Project/AR_bands_N_slopes.npy')
-ARsN = np.load('C:/Users/Brendan/Desktop/MSU_Project/AR_bands_N_lat.npy')
+fit_paramsN = np.load('C:/Users/Brendan/Desktop/Inbox/AL/absolute_24thresh_revised/North/AR_Absolute_slopes_N_3x_6x3ysmooth.npy')
+ARsN = np.load('C:/Users/Brendan/Desktop/Inbox/AL/absolute_24thresh_revised/North/AR_Absolute_bands_N_3x_6x3ysmooth.npy')
 
 count = 0
-#for i in range(500):
-for i in range(1000):
+for i in range(3000):
     if ARsN[i,0,0] == 0.:
+    if ARsN[i,2,0] == 0.:
+    #if ARsS[i,1,0] == 0.:  #NOAA
         count = i
         break
     
 slopes = fit_paramsN[:,0]
-slopes = slopes[slopes != 0]
+intercept = fit_paramsN[:,1]
+#slopes = slopes[slopes != 0]
+slopes = slopes[intercept != 0]
+
+    
+#slopes = fit_paramsN[:,0]
+#slopes = slopes[slopes != 0]
+
 
 med_lat = np.zeros((count))
 avg_lat = np.zeros((count))
@@ -116,8 +128,8 @@ m, b = np.polyfit(med_lat, slopes, 1)
 med_lat_sin2 = np.sin(np.deg2rad(med_lat))**2
 #med_lat_sin2 = np.rad2deg(np.sin(np.deg2rad(med_lat)))
 
-#slopes_days = slopes*2
-slopes_days = slopes
+slopes_days = slopes*2
+#slopes_days = slopes
 
 m2, b2 = np.polyfit(med_lat_sin2, slopes_days, 1)
 

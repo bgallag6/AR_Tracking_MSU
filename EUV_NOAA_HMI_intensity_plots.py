@@ -4,10 +4,12 @@ Created on Thu Jul 13 12:58:16 2017
 
 @author: Brendan
 """
+import matplotlib.pyplot as plt
+import numpy as np
 
 #for h in range(11):
 #for h in range(len(frm_boundsN_H)):
-for h in range(10):
+for h in range(1):
     
     AR_lat0 =  AR_complete[h,1,:]
     AR_lat = AR_lat0[AR_lat0 != 0]
@@ -74,8 +76,9 @@ for h in range(10):
         intHMI[indFrm] += HMI_int[r]
     """    
     intF /= np.max(intF)   
-    intNOAA /= np.max(intNOAA)  
-    intHMI /= np.max(intHMI)
+    #intNOAA /= np.max(intNOAA)  
+    #intHMI /= np.max(intHMI)
+    HMI_int /= np.max(HMI_int)
         
     #HMI_frm /= 2. 
     #frmHMI /= 2.     
@@ -183,14 +186,15 @@ for h in range(10):
                 label.set_linewidth(3.0)  # the legend line width
                 
     ax2 = plt.subplot2grid((2,1),(1, 0), colspan=1, rowspan=1)
-    plt.scatter(AR_frm, AR_lon, color='blue', label='EUV')
-    plt.scatter(NOAA_frm, NOAA_lon, color='black', label='NOAA')
-    plt.scatter(HMI_frm, HMI_lon, color='red', label='HMI')
+    plt.scatter(AR_frm, AR_lat, color='blue', label='EUV')
+    plt.scatter(NOAA_frm, NOAA_lat, color='black', label='NOAA')
+    plt.scatter(HMI_frm, HMI_lat, color='red', label='HMI')
     #plt.xlim(0,180)
     #plt.xlim(np.min(AR_frm)-(np.max(AR_frm)*0.1),np.max(AR_frm)+(np.max(AR_frm)*0.1))
     #plt.ylim(np.min(AR_lon)-(np.max(AR_lon)*0.1),np.max(AR_lon)+(np.max(AR_lon)*0.1))
     plt.xlim(np.min(AR_frm)*0.9,np.max(AR_frm)*1.05)
     plt.ylim(np.min(AR_lon)-(np.max(AR_lon)*0.15),np.max(AR_lon)+(np.max(AR_lon)*0.15))
+    plt.ylim(0,90)
     plt.xlabel('Days', fontsize=font_size)
     plt.ylabel('Longitude', fontsize=font_size)
     #plt.ylim(0,360)

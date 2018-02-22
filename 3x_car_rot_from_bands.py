@@ -24,8 +24,8 @@ font_size = 23
 #deg0 = [10,15,20,30]
 deg0 = [20]
 
-#hemi = 'N'
-hemi = 'S'
+hemi = 'N'
+#hemi = 'S'
 smooth_x = 6  #  5, 6, 8, 10
 smooth_y = 3  #  2, 3, 4, 5
 
@@ -39,14 +39,14 @@ elif hemi == 'S':
    
 #num_bands = np.load('C:/Users/Brendan/Desktop/MSU_Project/num_bands_S.npy')
 #num_bands = np.load('C:/Users/Brendan/Desktop/Files/MSU_Project/8_3/MSU_Project/AL_smoothing/num_bands_%s_3x_30int_%sx%sysmooth.npy' % (hemi, smooth_x, smooth_y))
-num_bands = np.load('C:/Users/Brendan/Desktop/Inbox/AL/absolute/%s/AR_Absolute_num_bands_%s_3x_%sx%sysmooth.npy' % (hemiF, hemi, smooth_x, smooth_y))
+num_bands = np.load('C:/Users/Brendan/Desktop/Inbox/AL/absolute_24thresh_revised/%s/AR_Absolute_num_bands_%s_3x_%sx%sysmooth.npy' % (hemiF, hemi, smooth_x, smooth_y))
 #num_bands = np.load('C:/Users/Brendan/Desktop/NOAA_absolute/NOAA_Absolute_num_bands_%s_3x_%sx%sysmooth.npy' % (hemi, smooth_x, smooth_y))
 #num_bands = np.load('C:/Users/Brendan/Desktop/Files/MSU_Project/8_3/NOAA_absolute/NOAA_Absolute_num_bands_%s_3x_%sx%sysmooth.npy' % (hemi, smooth_x, smooth_y))
 #num_bands = num_bands
     
 #ARs = np.load('C:/Users/Brendan/Desktop/MSU_Project/AR_bands_S.npy')
 #ARs = np.load('C:/Users/Brendan/Desktop/MSU_Project/AL_smoothing/AR_bands_%s_3x_30int_%sx%sysmooth.npy' % (hemi, smooth_x, smooth_y))
-ARs = np.load('C:/Users/Brendan/Desktop/Inbox/AL/absolute/%s/AR_Absolute_bands_%s_3x_%sx%sysmooth.npy' % (hemiF, hemi, smooth_x, smooth_y))
+ARs = np.load('C:/Users/Brendan/Desktop/Inbox/AL/absolute_24thresh_revised/%s/AR_Absolute_bands_%s_3x_%sx%sysmooth.npy' % (hemiF, hemi, smooth_x, smooth_y))
 #ARs = np.load('C:/Users/Brendan/Desktop/NOAA_absolute/NOAA_Absolute_bands_%s_3x_%sx%sysmooth.npy' % (hemi, smooth_x, smooth_y))
 #ARs = np.load('C:/Users/Brendan/Desktop/Files/MSU_Project/8_3/NOAA_absolute/NOAA_Absolute_bands_%s_3x_%sx%sysmooth.npy' % (hemi, smooth_x, smooth_y))
 #ARs = AR_total

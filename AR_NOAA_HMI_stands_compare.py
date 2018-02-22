@@ -32,9 +32,9 @@ from mpl_toolkits.mplot3d import Axes3D
 
 #"""
 s = readsav('C:/Users/Brendan/Desktop/AR_Tracking_MSU/fits_strs_20161219v7.sav')
-dates = np.load('C:/Users/Brendan/Desktop/MSU_Project/Active_Longitude/image_jul_dates.npy')
+dates = np.load('C:/Users/Brendan/Desktop/Files/MSU_Project/Active_Longitude/image_jul_dates.npy')
 dates = np.array(dates)
-f_names = np.load('C:/Users/Brendan/Desktop/MSU_Project/Active_Longitude/ar_filenames.npy')
+f_names = np.load('C:/Users/Brendan/Desktop/Files/MSU_Project/Active_Longitude/ar_filenames.npy')
 
 #trim = 2922  # image before jump 20140818-20151103
 trim = 2872  # last index for end of Carrington rotation
@@ -71,7 +71,7 @@ Area = []
 
 count = 0
 
-with open('C:/Users/Brendan/Desktop/MSU_Project/Week3/NOAA AR/Full_NOAA_AR.csv', 'rb') as csvfile:
+with open('C:/Users/Brendan/Desktop/Files/MSU_Project/Week3/NOAA AR/Full_NOAA_AR.csv', 'rb') as csvfile:
      spamreader = csv.reader(csvfile, delimiter=',', quotechar='|')
      
      for row in spamreader:

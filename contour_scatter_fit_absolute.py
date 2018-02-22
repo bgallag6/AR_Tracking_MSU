@@ -15,13 +15,15 @@ import matplotlib.path as mplPath
 from scipy.io.idl import readsav
 import jdcal
 
-abs_dates = np.load('C:/Users/Brendan/Desktop/AR_Tracking_MSU/data/EUV_Absolute_Dates_0thresh.npy')
-abs_ARs = np.load('C:/Users/Brendan/Desktop/AR_Tracking_MSU/data/EUV_Absolute_ARs_0thresh.npy')
+abs_dates = np.load('C:/Users/Brendan/Desktop/AR_Tracking_MSU/data/EUV_Absolute_Dates_24thresh_revised.npy')
+abs_ARs = np.load('C:/Users/Brendan/Desktop/AR_Tracking_MSU/data/EUV_Absolute_ARs_24thresh_revised.npy')
 
-abs_ARs[:,3,:] *= 2  #added this
+abs_ARs[:,3,:] *= 2  # convert days to frames
 
-xsmooth = [5,6,8,10]
-ysmooth = [2,3,4,5]
+# pixels to smooth in each direction
+xsmooth = [5,5,8,8]
+#ysmooth = [2,3,4,5]
+ysmooth = [3,6,3,6]
 
 for c0 in range(len(xsmooth)):
     #hemi = 'N'
@@ -57,8 +59,9 @@ for c0 in range(len(xsmooth)):
     
     num_bands = np.zeros((int(seg)))
     
+    # for each 3x Carring rotation period...
     for c in range(int(seg)):
-    #for c in range(3):
+    #for c in range(1,2):
         
         day_start = int(car_days*c)
         day_end = int(car_days*(c+1))
@@ -89,9 +92,10 @@ for c0 in range(len(xsmooth)):
         frmN_tot = []
         frmS_tot = []
     
-        
+        # for each frame within the date range...
         for i in range(int(ind_start),int(ind_end)):
-                    
+            
+            # extract plage region detection properties
             longitude = abs_ARs[i,0,:]
             latitude = abs_ARs[i,1,:]
             intensity = abs_ARs[i,2,:]
@@ -165,10 +169,10 @@ for c0 in range(len(xsmooth)):
             ax1.scatter(frmS_tot, xS_tot) 
             ax2.hist(xS_tot)
         
-        plt.savefig('C:/Users/Brendan/Desktop/Inbox/AL/absolute/%s/Car_Rot_%i_%i_%s_%ix%iysmooth.jpg' % (hemiF,(c*rotations)+1, ((c+1)*rotations),hemiF, smooth_x,smooth_y), bbox_inches = 'tight')
+        #plt.savefig('C:/Users/Brendan/Desktop/Inbox/AL/absolute/%s/Car_Rot_%i_%i_%s_%ix%iysmooth.jpg' % (hemiF,(c*rotations)+1, ((c+1)*rotations),hemiF, smooth_x,smooth_y), bbox_inches = 'tight')
         plt.close()
     
-        pad = 18
+        pad = 18  # 'pad' the edges of each scatter plot, to allow smoothing past the edges
         
         if hemi == "N": 
             #matrx = np.zeros((360+pad,int(frmN_tot[-1])-int(frmN_tot[0])+pad+1))
@@ -178,6 +182,7 @@ for c0 in range(len(xsmooth)):
             matrx_lat = np.zeros((360+pad,int(frmN_tot[-1])+pad+1))  # added 8_25
             #matrx_area = np.zeros((360+pad,int(frmN_tot[-1])-int(frmN_tot[0])+pad+1))  # added 8_25
             
+            # plot each point with correct intensity: (x,y) = (frame, longitude)
             for i in range(len(frmN_tot)):
                 #matrx[int(xN_tot[i])+(pad/2),int(frmN_tot[i])-int(frmN_tot[0])+(pad/2)] = intN_tot[i]
                 #matrx_lat[int(xN_tot[i])+(pad/2),int(frmN_tot[i])-int(frmN_tot[0])+(pad/2)] = yN_tot[i]
@@ -194,6 +199,7 @@ for c0 in range(len(xsmooth)):
             matrx_lat = np.zeros((360+pad,int(frmS_tot[-1])+pad+1))  # added 8_25
             #matrx_area = np.zeros((360+pad,int(frmS_tot[-1])-int(frmS_tot[0])+pad+1))  # added 8_25
             
+            # plot each point with correct intensity: (x,y) = (frame, longitude)
             for i in range(len(frmS_tot)):
                 #matrx[int(xS_tot[i])+(pad/2),int(frmS_tot[i])-int(frmS_tot[0])+(pad/2)] = intS_tot[i]
                 #matrx_lat[int(xS_tot[i])+(pad/2),int(frmS_tot[i])-int(frmS_tot[0])+(pad/2)] = yS_tot[i]
@@ -218,7 +224,8 @@ for c0 in range(len(xsmooth)):
         
         for i in range(matrx.shape[1]):
             smoothed_data_box[:,i] = convolve(matrx[:,i], box_1D_kernelY)
-            matrx[:,i] = convolve(matrx[:,i], box_1D_kernelX)
+            #matrx[:,i] = convolve(matrx[:,i], box_1D_kernelX)
+            matrx[:,i] = convolve(matrx[:,i], box_1D_kernelY)
             
             
         #fig = plt.figure(figsize=(10,10))
@@ -257,7 +264,7 @@ for c0 in range(len(xsmooth)):
         ax1.set_xlim(0,162+pad) # added 8_25
         ax2.set_xlim(0,162+pad) # added 8_25
         
-        plt.savefig('C:/Users/Brendan/Desktop/Inbox/AL/absolute/%s/%s_contours_%i_%ix%iysmooth.jpeg' % (hemiF, hemiF, c, smooth_x, smooth_y), bbox_inches='tight')
+        #plt.savefig('C:/Users/Brendan/Desktop/Inbox/AL/absolute/%s/%s_contours_%i_%ix%iysmooth.jpeg' % (hemiF, hemiF, c, smooth_x, smooth_y), bbox_inches='tight')
         plt.close()       
            
         level0 = CS.levels[0]
@@ -394,7 +401,8 @@ for c0 in range(len(xsmooth)):
            ax2.plot(framesC, m*framesC + b, 'r-')   
     
         #"""
-        plt.savefig('C:/Users/Brendan/Desktop/Inbox/AL/absolute/%s/%s_AR_Bands_Compare_%i_%ix%iysmooth.jpeg' % (hemiF, hemiF, c,smooth_x,smooth_y), bbox_inches = 'tight')
+        #plt.savefig('C:/Users/Brendan/Desktop/Inbox/AL/absolute/%s/%s_AR_Bands_Compare_%i_%ix%iysmooth.jpeg' % (hemiF, hemiF, c,smooth_x,smooth_y), bbox_inches = 'tight')
+        plt.savefig('C:/Users/Brendan/Desktop/Inbox/AL2/%s_AR_Bands_Compare_%i_%ix%iysmooth.jpeg' % (hemiF, c,smooth_x,smooth_y), bbox_inches = 'tight')
         plt.close()    
          
         print (len(paths) - count) 
@@ -402,9 +410,9 @@ for c0 in range(len(xsmooth)):
         
         num_bands[c] = (len(paths) - count)
     
-    np.save('C:/Users/Brendan/Desktop/Inbox/AL/AR_Absolute_bands_%s_3x_%ix%iysmooth.npy' % (hemi,smooth_x,smooth_y), AR_total)
-    np.save('C:/Users/Brendan/Desktop/Inbox/AL/AR_Absolute_num_bands_%s_3x_%ix%iysmooth.npy' % (hemi,smooth_x,smooth_y), num_bands)
-    np.save('C:/Users/Brendan/Desktop/Inbox/AL/AR_Absolute_slopes_%s_3x_%ix%iysmooth.npy' % (hemi,smooth_x,smooth_y), fit_params)
+    np.save('C:/Users/Brendan/Desktop/Inbox/AL2/AR_Absolute_bands_%s_3x_%ix%iysmooth.npy' % (hemi,smooth_x,smooth_y), AR_total)
+    np.save('C:/Users/Brendan/Desktop/Inbox/AL2/AR_Absolute_num_bands_%s_3x_%ix%iysmooth.npy' % (hemi,smooth_x,smooth_y), num_bands)
+    np.save('C:/Users/Brendan/Desktop/Inbox/AL2/AR_Absolute_slopes_%s_3x_%ix%iysmooth.npy' % (hemi,smooth_x,smooth_y), fit_params)
     
     """
         num_bins = 36 

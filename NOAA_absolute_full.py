@@ -6,30 +6,20 @@ Created on Tue Aug 01 18:40:44 2017
 """
 
 """
-###############################
-### Comparison NOAA AR Data ###
-### and our data  #############
-###############################
+####################################
+### Convert NOAA .csv detections ###
+###       to numpy array         ###
+####################################
 """
 
 import numpy as np
-import matplotlib.pyplot as plt
 from scipy.io.idl import readsav
 import jdcal
 import csv
-import urllib2
-import urllib
 from astropy.time import Time
 import datetime
-import numpy as np
-import matplotlib.pyplot as plt
-from scipy.io.idl import readsav
-import jdcal
 
 #"""
-plt.rcParams["font.family"] = "Times New Roman"
-font_size = 23
-
 datesNOAA = []
 datesD = []
 AR_num = []
@@ -44,7 +34,7 @@ fmt = '%Y%m%d'
 datesARs = []
 greg_date = []
 
-with open('C:/Users/Brendan/Desktop/NOAA_2010_2014.csv', 'rb') as csvfile:
+with open('C:/Users/Brendan/Desktop/Files/MSU_Project/8_1/NOAA_2010_2014.csv', 'rb') as csvfile:
      spamreader = csv.reader(csvfile, delimiter=',', quotechar='|')
      
      for row in spamreader:
@@ -60,9 +50,10 @@ with open('C:/Users/Brendan/Desktop/NOAA_2010_2014.csv', 'rb') as csvfile:
              area = np.append(area, float(row[4]))
         count += 1
 
+# days elapsed since first date
 datesNOAA0 = np.copy(datesNOAA) 
-datesNOAA0 -= datesNOAA[0]
-datesNOAA0 += 2
+datesNOAA0 -= datesNOAA[0]  
+datesNOAA0 += 2  # pad by 2 days to match the 2010/05/19 start date of the EUV detections
 
 dates_final = np.zeros((3,len(greg_date)+2))
 dates_final[0,2:len(greg_date)+2] = datesNOAA0

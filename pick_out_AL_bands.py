@@ -27,13 +27,13 @@ x_ticks = np.array(x_bins) + (deg/2)
 
 ### Southern Hemisphere ###
    
-num_bands = np.load('C:/Users/Brendan/Desktop/MSU_Project/num_bands_S.npy')
+num_bands = np.load('C:/Users/Brendan/Desktop/Files/MSU_Project/num_bands_S.npy')
 #num_bands = num_bands
     
-ARs = np.load('C:/Users/Brendan/Desktop/MSU_Project/AR_bands_S.npy')
+ARs = np.load('C:/Users/Brendan/Desktop/Files/MSU_Project/AR_bands_S.npy')
 #ARs = AR_total
 
-fit_params = np.load('C:/Users/Brendan/Desktop/MSU_Project/AR_bands_S_slopes.npy')
+fit_params = np.load('C:/Users/Brendan/Desktop/Files/MSU_Project/AR_bands_S_slopes.npy')
 #ARs = AR_total
 
 for i in range(500):

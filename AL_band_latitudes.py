@@ -174,7 +174,7 @@ for c in range(rot_start,rot_end):
         #"""
     number += int(num_bands[c])
 #plt.savefig('C:/Users/Brendan/Desktop/Bands_Within_AL_Zone_%s.jpeg' % hemiF, bbox_inches='tight')    
-plt.savefig('C:/Users/Brendan/Desktop/All_Bands_%s_AL_Marked.jpeg' % hemiF, bbox_inches='tight')    
+#plt.savefig('C:/Users/Brendan/Desktop/All_Bands_%s_AL_Marked.jpeg' % hemiF, bbox_inches='tight')    
 
 """
 ## intensity histogram comparison

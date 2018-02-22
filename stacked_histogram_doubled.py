@@ -7,9 +7,6 @@ Created on Wed Jul 26 13:41:11 2017
 
 """
 #########################################
-### based on number of frames ###########
-### - shows full animated scatter  ######
-### (longitude vs frame)  ###############
 #########################################
 """
 
@@ -25,11 +22,8 @@ font_size = 23
 deg0 = [10,15,20,30]
 
 hemi = 'N'
-#hemi = 'S'
-smooth_x = 5  #  5, 6, 8, 10
-smooth_y = 2  #  2, 3, 4, 5
 
-AL_thresh = 8
+int_thresh = 24
 
 
 if hemi == 'N':
@@ -37,30 +31,30 @@ if hemi == 'N':
 elif hemi == 'S':
     hemiF = 'South'
   
-num_bands5 =  np.load('C:/Users/Brendan/Desktop/MSU_Project/AL_smoothing/num_bands_%s_3x_30int_%sx%sysmooth.npy' % (hemi, 5, 2))
-num_bands6 =  np.load('C:/Users/Brendan/Desktop/MSU_Project/AL_smoothing/num_bands_%s_3x_30int_%sx%sysmooth.npy' % (hemi, 6, 3))
-num_bands8 =  np.load('C:/Users/Brendan/Desktop/MSU_Project/AL_smoothing/num_bands_%s_3x_30int_%sx%sysmooth.npy' % (hemi, 8, 4))
-num_bands10 =  np.load('C:/Users/Brendan/Desktop/MSU_Project/AL_smoothing/num_bands_%s_3x_30int_%sx%sysmooth.npy' % (hemi, 10, 5))
+num_bands5 =  np.load('C:/Users/Brendan/Desktop/Inbox/AL/absolute_%ithresh_revised/North/AR_Absolute_num_bands_%s_3x_%sx%sysmooth.npy' % (int_thresh, hemi, 5, 2))
+num_bands6 =  np.load('C:/Users/Brendan/Desktop/Inbox/AL/absolute_%ithresh_revised/North/AR_Absolute_num_bands_%s_3x_%sx%sysmooth.npy' % (int_thresh, hemi, 6, 3))
+num_bands8 =  np.load('C:/Users/Brendan/Desktop/Inbox/AL/absolute_%ithresh_revised/North/AR_Absolute_num_bands_%s_3x_%sx%sysmooth.npy' % (int_thresh, hemi, 8, 4))
+num_bands10 =  np.load('C:/Users/Brendan/Desktop/Inbox/AL/absolute_%ithresh_revised/North/AR_Absolute_num_bands_%s_3x_%sx%sysmooth.npy' % (int_thresh, hemi, 10, 5))
     
-ARs5 = np.load('C:/Users/Brendan/Desktop/MSU_Project/AL_smoothing/AR_bands_%s_3x_30int_%sx%sysmooth.npy' % (hemi, 5, 2))
-ARs6 = np.load('C:/Users/Brendan/Desktop/MSU_Project/AL_smoothing/AR_bands_%s_3x_30int_%sx%sysmooth.npy' % (hemi, 6, 3))
-ARs8 = np.load('C:/Users/Brendan/Desktop/MSU_Project/AL_smoothing/AR_bands_%s_3x_30int_%sx%sysmooth.npy' % (hemi, 8, 4))
-ARs10 = np.load('C:/Users/Brendan/Desktop/MSU_Project/AL_smoothing/AR_bands_%s_3x_30int_%sx%sysmooth.npy' % (hemi, 10, 5))
+ARs5 = np.load('C:/Users/Brendan/Desktop/Inbox/AL/absolute_%ithresh_revised/North/AR_Absolute_bands_%s_3x_%sx%sysmooth.npy' % (int_thresh, hemi, 5, 2))
+ARs6 = np.load('C:/Users/Brendan/Desktop/Inbox/AL/absolute_%ithresh_revised/North/AR_Absolute_bands_%s_3x_%sx%sysmooth.npy' % (int_thresh, hemi, 6, 3))
+ARs8 = np.load('C:/Users/Brendan/Desktop/Inbox/AL/absolute_%ithresh_revised/North/AR_Absolute_bands_%s_3x_%sx%sysmooth.npy' % (int_thresh, hemi, 8, 4))
+ARs10 = np.load('C:/Users/Brendan/Desktop/Inbox/AL/absolute_%ithresh_revised/North/AR_Absolute_bands_%s_3x_%sx%sysmooth.npy' % (int_thresh, hemi, 10, 5))
 
 ARs_arr_N = [ARs5, ARs6, ARs8, ARs10]
 num_bands_arr_N = [num_bands5, num_bands6, num_bands8, num_bands10]
 
 hemi = 'S'
 
-num_bands5 =  np.load('C:/Users/Brendan/Desktop/MSU_Project/AL_smoothing/num_bands_%s_3x_30int_%sx%sysmooth.npy' % (hemi, 5, 2))
-num_bands6 =  np.load('C:/Users/Brendan/Desktop/MSU_Project/AL_smoothing/num_bands_%s_3x_30int_%sx%sysmooth.npy' % (hemi, 6, 3))
-num_bands8 =  np.load('C:/Users/Brendan/Desktop/MSU_Project/AL_smoothing/num_bands_%s_3x_30int_%sx%sysmooth.npy' % (hemi, 8, 4))
-num_bands10 =  np.load('C:/Users/Brendan/Desktop/MSU_Project/AL_smoothing/num_bands_%s_3x_30int_%sx%sysmooth.npy' % (hemi, 10, 5))
+num_bands5 =  np.load('C:/Users/Brendan/Desktop/Inbox/AL/absolute_%ithresh_revised/South/AR_Absolute_num_bands_%s_3x_%sx%sysmooth.npy' % (int_thresh, hemi, 5, 2))
+num_bands6 =  np.load('C:/Users/Brendan/Desktop/Inbox/AL/absolute_%ithresh_revised/South/AR_Absolute_num_bands_%s_3x_%sx%sysmooth.npy' % (int_thresh, hemi, 6, 3))
+num_bands8 =  np.load('C:/Users/Brendan/Desktop/Inbox/AL/absolute_%ithresh_revised/South/AR_Absolute_num_bands_%s_3x_%sx%sysmooth.npy' % (int_thresh, hemi, 8, 4))
+num_bands10 =  np.load('C:/Users/Brendan/Desktop/Inbox/AL/absolute_%ithresh_revised/South/AR_Absolute_num_bands_%s_3x_%sx%sysmooth.npy' % (int_thresh, hemi, 10, 5))
     
-ARs5 = np.load('C:/Users/Brendan/Desktop/MSU_Project/AL_smoothing/AR_bands_%s_3x_30int_%sx%sysmooth.npy' % (hemi, 5, 2))
-ARs6 = np.load('C:/Users/Brendan/Desktop/MSU_Project/AL_smoothing/AR_bands_%s_3x_30int_%sx%sysmooth.npy' % (hemi, 6, 3))
-ARs8 = np.load('C:/Users/Brendan/Desktop/MSU_Project/AL_smoothing/AR_bands_%s_3x_30int_%sx%sysmooth.npy' % (hemi, 8, 4))
-ARs10 = np.load('C:/Users/Brendan/Desktop/MSU_Project/AL_smoothing/AR_bands_%s_3x_30int_%sx%sysmooth.npy' % (hemi, 10, 5))
+ARs5 = np.load('C:/Users/Brendan/Desktop/Inbox/AL/absolute_%ithresh_revised/South/AR_Absolute_bands_%s_3x_%sx%sysmooth.npy' % (int_thresh, hemi, 5, 2))
+ARs6 = np.load('C:/Users/Brendan/Desktop/Inbox/AL/absolute_%ithresh_revised/South/AR_Absolute_bands_%s_3x_%sx%sysmooth.npy' % (int_thresh, hemi, 6, 3))
+ARs8 = np.load('C:/Users/Brendan/Desktop/Inbox/AL/absolute_%ithresh_revised/South/AR_Absolute_bands_%s_3x_%sx%sysmooth.npy' % (int_thresh, hemi, 8, 4))
+ARs10 = np.load('C:/Users/Brendan/Desktop/Inbox/AL/absolute_%ithresh_revised/South/AR_Absolute_bands_%s_3x_%sx%sysmooth.npy' % (int_thresh, hemi, 10, 5))
 
 ARs_arr_S = [ARs5, ARs6, ARs8, ARs10]
 num_bands_arr_S = [num_bands5, num_bands6, num_bands8, num_bands10]
@@ -68,91 +62,102 @@ num_bands_arr_S = [num_bands5, num_bands6, num_bands8, num_bands10]
 #AL_total = np.zeros((4,18,37))
 AL_combined = np.zeros((18,36))
 
-y_lim = 5.
-#y_lim = 16.
-#y_lim = 64.
-#y_lim = 32.
-#y_lim = 128.
-
-for n in range(4):
-    colors = ['black','blue','red','green']
-    ARs = ARs_arr_N[n]
-    num_bands = num_bands_arr_N[n]
-
-    for i in range(500):
-        if ARs[i,0,0] == 0:
-            count = i
-            break
-    
-    rot_start = 0
-    rot_end = 18
-    
-    for k in range(len(deg0)):
-        number = 0
-        deg = deg0[k]
-        num_bins = 360/deg
-        
-        x_bins = [deg*l for l in range(num_bins+1)]
-        x_bins2 = [deg*l for l in range(num_bins)]
-        
-        x_ticks = np.array(x_bins) + (deg/2)
-        
-        #AL_array = np.zeros((rot_end-rot_start,num_bins))
-            
-        for c in range(rot_start,rot_end):
-        #for c in range(8):    
-               
-            int_tot = []
-            x_tot = []
-            frm_tot = []
-            first_tot = []
-            
-            for i in range(int(num_bands[c])):
-            
-                intensities = np.array(ARs[i+number,2,:])
-                int_temp = intensities[intensities != 0]
-                
-                xcoords = np.array(ARs[i+number,1,:])
-                x_temp = xcoords[xcoords != 0]
-                
-                frm = np.array(ARs[i+number,0,:]) 
-                frm_temp = frm[frm != 0]
-                
-                int_tot = np.append(int_tot, int_temp)
-                
-                x_tot = np.append(x_tot, x_temp)
-                
-                frm_tot = np.append(frm_tot, frm_temp) 
-                
-                first_tot = np.append(first_tot, x_temp[0])
-                
-            number += int(num_bands[c])  # could have better way -- summing all values below
-            
-            ### add / subtract 360 degrees if band was corrected to below 0 / above 360
-            x_tot = np.array([x-360 if x > 360 else x for x in x_tot])
-            x_tot = np.array([x+360 if x < 0 else x for x in x_tot])
-            
-              
-            plt.figure()
-            y1, x1, _ = plt.hist(x_tot, bins=x_bins)
-            plt.close()
-               
-            #y3 = y1/(np.std(y1))
-            y3 = y1
-            
-            nbins = deg/10
-            for h3 in range(num_bins):
-                for h4 in range(nbins):
-                    #AL_combined[c,(h3*nbins)+h4] += y7[h3]
-                    AL_combined[c,(h3*nbins)+h4] += y3[h3]
-                    
-
+#"""
 for n in range(4):
     colors = ['black','blue','red','green']
     ARs = ARs_arr_S[n]
     num_bands = num_bands_arr_S[n]
 
-    for i in range(500):
+    for i in range(1000):
+        if ARs[i,0,0] == 0:
+            count = i
+            break
+    
+    rot_start = 0
+    rot_end = 18
+    
+    for k in range(len(deg0)):
+        number = 0
+        deg = deg0[k]
+        num_bins = 360/deg
+        
+        x_bins = [deg*l for l in range(num_bins+1)]
+        x_bins2 = [deg*l for l in range(num_bins)]
+        
+        x_ticks = np.array(x_bins) + (deg/2)
+        
+        #AL_array = np.zeros((rot_end-rot_start,num_bins))
+            
+        for c in range(rot_start,rot_end):
+        #for c in range(8):    
+               
+            int_tot = []
+            x_tot = []
+            frm_tot = []
+            first_tot = []
+            
+            for i in range(int(num_bands[c])):
+            
+                intensities = np.array(ARs[i+number,2,:])
+                int_temp = intensities[intensities != 0]
+                #int_avg = np.average(int_temp)
+                #int_temp /= int_avg
+                
+                xcoords = np.array(ARs[i+number,1,:])
+                x_temp = xcoords[xcoords != 0]
+                #x_avg = np.average(x_temp)  # for each band counts as one
+                #x_count = len(x_temp)
+                
+                frm = np.array(ARs[i+number,0,:]) 
+                frm_temp = frm[frm != 0]
+                
+                int_tot = np.append(int_tot, int_temp)
+                
+                x_tot = np.append(x_tot, x_temp)
+                
+                frm_tot = np.append(frm_tot, frm_temp) 
+                
+                first_tot = np.append(first_tot, x_temp[0])
+                
+                #for l1 in range(num_bins):
+                #    if x_avg > l1*deg and x_avg < (l1+1)*deg:
+                #        #x_scaled[l1] += int_tot[r]
+                #        x_scaled[l1] += (x_count / int_avg)
+                #        #x_scaled[l1] += 1
+                
+            number += int(num_bands[c])  # could have better way -- summing all values below
+            
+            ### add / subtract 360 degrees if band was corrected to below 0 / above 360
+            x_tot = np.array([x-360 if x > 360 else x for x in x_tot])
+            x_tot = np.array([x+360 if x < 0 else x for x in x_tot])
+            
+            y1, x1 = np.histogram(x_tot, bins=x_bins)
+               
+            y3 = (y1-np.mean(y1))/(np.std(y1))
+            #y3 = y1
+            
+            y4 = [0 if x < 1. else x for x in y3]
+            y5 = [0 if x >= 2. else x for x in y4]
+            y6 = [0 if x < 2. else x for x in y4]
+            #y6 = [0 if x < 2. else 1 for x in y4]
+            
+            
+            nbins = deg/10
+            for h3 in range(num_bins):
+                for h4 in range(nbins):
+                    #AL_combined[c,(h3*nbins)+h4] += y7[h3]
+                    AL_combined[c,(h3*nbins)+h4] += y6[h3]
+                    #AL_combined[c,(h3*nbins)+h4] += y3[h3]
+                    
+#"""
+
+"""
+for n in range(4):
+    colors = ['black','blue','red','green']
+    ARs = ARs_arr_S[n]
+    num_bands = num_bands_arr_S[n]
+
+    for i in range(1000):
         if ARs[i,0,0] == 0:
             count = i
             break
@@ -210,8 +215,8 @@ for n in range(4):
             y1, x1, _ = plt.hist(x_tot, bins=x_bins)
             plt.close()
                
-            #y3 = y1/(np.std(y1))
-            y3 = y1
+            y3 = (y1-np.mean(y1))/(np.std(y1))
+            #y3 = y1
             
             nbins = deg/10
             for h3 in range(num_bins):
@@ -275,6 +280,12 @@ for h1 in range(18):
     
 """
 #"""
+#y_lim = 5.
+y_lim = 16.
+#y_lim = 64.
+#y_lim = 32.
+#y_lim = 128.
+
 xbins36 = np.array([10*i for i in range(36)])
 xbins72 = np.array([10*i for i in range(72)])
             
@@ -284,10 +295,14 @@ plt.suptitle(r'Combined Hemispheres: 3x Rotation Periods' + r'\n Black = 2$\sigm
 
 for h1 in range(18):
     
-    yrow = AL_combined[h1,:]/np.std(AL_combined[h1,:])
-    y0 = [0 if x < 2. else x for x in yrow]
-    y8 = [0 if x >= 3. else x for x in y0]
-    y9 = [0 if x < 3. else x for x in y0]
+    #yrow = (AL_combined[h1,:]-np.mean(AL_combined[h1,:]))/np.std(AL_combined[h1,:])  # revised 9_18
+    yrow = AL_combined[h1,:]
+    #y0 = [0 if x < 2. else x for x in yrow]
+    #y8 = [0 if x >= 3. else x for x in y0]
+    #y9 = [0 if x < 3. else x for x in y0]
+    y0 = [0 if x < 9. else x for x in yrow]
+    y8 = [0 if x >= 12. else x for x in y0]
+    y9 = [0 if x < 12. else x for x in y0]
     #y0 = [0 if x < 24. else x for x in yrow]   
     #y8 = [0 if x >= 36. else x for x in y0]
     #y9 = [0 if x < 36. else x for x in y0]
@@ -315,7 +330,7 @@ for h1 in range(18):
     #ax1.bar(xbins36, AL_combined[h1,:], width=10, color='blue')
     #ax1.bar(xbins36, y8, width=10, color='black')
     #ax1.bar(xbins36, y9, width=10, color='red')
-    #ax1.bar(xbins72, y00, width=10, color='blue')
+    ax1.bar(xbins72, y00, width=10, color='blue')
     ax1.bar(xbins72, y88, width=10, color='black')
     ax1.bar(xbins72, y99, width=10, color='red')
 
