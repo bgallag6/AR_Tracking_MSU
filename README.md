@@ -4,10 +4,9 @@ lets see if this works -- it did work.
 
 ok, some time has passed.  will this work?
 
-```idl
-print, a
-```
+| IDL       | Python           | 
+| ------------- | ------------- | 
+| ```idl print, a ```   | ```python print(a) ``` |
 
-```python
-print(a)
-```
+
+
