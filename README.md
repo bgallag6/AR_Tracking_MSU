@@ -14,7 +14,14 @@ ok, some time has passed.  will this work?
 | STRMID(str0, a, b, /reverse_offset)  | str0[-(a+1) : -(a+1)+b]                                      |
 | STRMID(str0, a, b)                   | str0[a : a+b]                                                |
 | STRMID(str0, a, STRLEN(str0)-a)      | str0[a:]                                                     |
-| TOTAL(x, 2)                          | x.sum(axis=0)                                                |       
+| STRLEN(str0)                         | len(str0)                                                    |
+| TOTAL(x, 2)                          | x.sum(axis=0)                                                |      
+| FIX(x)                               | int(x)                                                       |
+| y = INTARR(2, 2)                     | y = np.zeros((2, 2), dtype=int)                              |
+| DELVARX, temp                        | del temp                                                     |
+| STRPOS(str0, 'a')                    | str0.find('a')                                               |
+| STRPUT, str0, 'one', 5               | slen = len('one') ; str0.replace(str0[5:5+slen], 'one')      |
+| REFORM(arr, 2, 3)                    | arr.reshape(3, 2)                                            |
 
 IDL:
 ```idl
@@ -48,3 +55,19 @@ def complement(arr, where):
     cmplmnt = tuple((np.array(cmplmnt)[:,0], np.array(cmplmnt)[:,1]))
     return cmplmnt
 ```
+
+IDL:
+```idl
+VALID_NUM(str0)
+```
+Python:
+```python
+def valid_num(str0):
+    try:
+        float(str0)
+        return True
+    except ValueError: 
+        return False
+valid_num(str0)
+```
+
